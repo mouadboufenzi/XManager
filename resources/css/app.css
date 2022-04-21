@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
 @import url('https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css');
 
 
@@ -102,7 +103,7 @@ a {
 
 .nav_logo-icon {
     font-size: 1.6rem;
-    color: var(--white-color);
+    color: #7c73e6;
 }
 
 .nav_logo-name {
@@ -119,7 +120,7 @@ a {
 }
 
 .nav_link:hover {
-    color: var(--white-color)
+    color: #7c73e6
 }
 
 .nav_icon {
@@ -138,7 +139,7 @@ a {
 }
 
 .active {
-    color: var(--white-color)
+    color: #7c73e6
 }
 
 .eEduction{
@@ -151,7 +152,7 @@ a {
     left: 0;
     width: 2px;
     height: 32px;
-    background-color: var(--white-color)
+    background-color: #7c73e6
 }
 
 .height-100 {
@@ -203,7 +204,7 @@ a {
     right: 2.5%;
     width: 102.5%;
     height: 653px;
-    background-color: #eee;
+    background-color: #fafafa;
 }
 
 .navDiv {
@@ -237,22 +238,98 @@ a {
     border-radius: 5px;
 }
 
-.myFilterForm {
-    
+.myFilterForm input, .myFilterForm select {
+    padding-left: 20px;
+} 
+
+.myFilter {
+    position: relative;
+    left: 2.5%;
+    width: 95%;
+    height: 95%;
+}
+
+.myFilter .form-group0 {
+    display: flex;
+    padding-top: 2.5%;
+}
+
+.myFilter .form-group0 .sec{
+    margin-left: 2%;
+    width: 30%;
+}
+
+.myFilter .form-group1 {
+    padding-top: 1%;
+    width: 94%;
+    margin-left: 2%;
 }
 
 .myData {
     width: 95%;
     height: 380px;
-    text-align: center;
-    overflow-y: scroll;
     background-color: white;
     box-shadow: 2px 2px 15px rgb(175, 174, 174);
     border-radius: 5px;
 }
 
-.myData::-webkit-scrollbar {
+.dataField {
+    position: relative;
+    top: 2.5%;
+    left: 4.5%;
+    width: 89%;
+    height: 95%;
+    overflow-y: scroll;
+    border: 0.5px solid rgb(224, 220, 220);
+    border-radius: 5px;
+}
+
+.dataField::-webkit-scrollbar {
     display: none;
+}
+
+#articles {
+    font-size: 9px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #articles td, #articles th {
+    border: 1px solid #ddd;
+    padding: 3px;
+  }
+
+  #articles #id {
+      text-align: center;
+  }
+  
+  #articles tr:nth-child(even){background-color: #fafafa;}
+  
+  #articles tr:hover {background-color: #ddd;}
+  
+  #articles th {
+      color: #7c73e6;
+    text-align: left;
+    background-color: #fcfafa;
+  }
+
+#g {
+    padding: 2px 4px;
+    color: white;
+    border-radius: 20px;
+    background-color: green;
+}
+
+#r {
+    padding: 2px 4px;
+    color: white;
+    border-radius: 20px;
+    background-color: red;
+}
+
+#id {
+    text-align: center;
 }
 
 .part2 {
@@ -270,3 +347,88 @@ a {
     box-shadow: 2px 2px 15px rgb(175, 174, 174);
     border-radius: 5px;
 }
+
+#tsum-tabs p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+  
+  #tsum-tabs main {
+    min-width: 320px;
+    max-width: 800px;
+    padding: 50px;
+    margin: 0 auto;
+    background: #fff;
+  }
+  
+  #tsum-tabs section {
+    display: none;
+    padding: 20px 0 0;
+  }
+  
+  #tsum-tabs #tab1,  #tsum-tabs #tab2{
+    display: none;
+  }
+  
+  
+  #tsum-tabs label {
+      width: 49%;
+      text-align: center;
+      padding: 10px 10px;
+    font-weight: 600;
+    color: #bbb;
+    border: 1px solid transparent;
+  }
+  
+  #tsum-tabs label:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+  }
+  
+  
+  #tsum-tabs label:hover {
+    color: #888;
+    cursor: pointer;
+  }
+  
+  #tsum-tabs input:checked + label {
+    color: #555;
+    border-bottom: 2px solid #7c73e6;
+  }
+  
+  #tsum-tabs #tab1:checked ~ #content1,
+  #tsum-tabs #tab2:checked ~ #content2 {
+    display: block;
+  }
+  
+  @media screen and (max-width: 650px) {
+    #tsum-tabs label {
+      font-size: 0;
+    }
+    #tsum-tabs label:before {
+      margin: 0;
+      font-size: 18px;
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    #tsum-tabs label {
+      padding: 15px;
+    }
+  }
+  
+  .myForm {
+  }
+  
+  .myForm input[type="text"], .myForm select {
+      margin-top: 0;
+      margin-bottom: 10px;
+      padding-left: 20px;
+  }
+  
+  #btt:hover {
+      color: rgb(45, 45, 45);
+      background-color: white;
+      border: 1px solid rgb(45, 45, 45);
+  }
