@@ -1,0 +1,272 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@import url('https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css');
+
+
+:root {
+    --header-height: 1.7rem;
+    --nav-width: 60px;
+    --first-color: white;
+    --first-color-light: #aaaaaa;
+    --white-color: rgb(45, 45, 45);
+    --body-font: 'Nunito', sans-serif;
+    --normal-font-size: 1rem;
+    --z-fixed: 100
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box
+}
+
+body {
+    position: relative;
+    margin: var(--header-height) 0 0 0;
+    padding: 0 0;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    transition: .5s;
+}
+
+a {
+    text-decoration: none
+}
+
+.header {
+    width: 100%;
+    height: var(--header-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background-color: white;
+    z-index: var(--z-fixed);
+    transition: .5s
+}
+
+.header_toggle {
+    color: rgb(45, 45, 45);
+    font-size: 1.5rem;
+    cursor: pointer
+}
+
+.header_img {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden
+}
+
+.header_img img {
+    width: 40px
+}
+
+.l-navbar {
+    position: fixed;
+    top: 0;
+    left: -30%;
+    width: var(--nav-width);
+    height: 100vh;
+    background-color: var(--first-color);
+    padding: .5rem 1rem 0 0;
+    transition: .5s;
+    z-index: var(--z-fixed);
+}
+
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden
+}
+
+.nav_logo, .nav_link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: 0.8rem;
+    padding: .5rem 0 .5rem 1.1rem;
+    text-decoration: none;
+}
+
+.nav_logo {
+    margin-bottom: 2rem
+}
+
+.nav_logo-icon {
+    font-size: 1.6rem;
+    color: var(--white-color);
+}
+
+.nav_logo-name {
+    color: var(--white-color);
+    font-weight: 650;
+}
+
+.nav_link {
+    position: relative;
+    color: var(--first-color-light);
+    margin-bottom: 1.5rem;
+    transition: .3s;
+    font-size: 14px;
+}
+
+.nav_link:hover {
+    color: var(--white-color)
+}
+
+.nav_icon {
+    font-size: 1.25rem
+}
+
+.show {
+    left: 0
+}
+
+/* .body-pd {
+    padding-left: calc(var(--nav-width) + 1rem)
+} */
+.body-pd a{
+    text-decoration: none;
+}
+
+.active {
+    color: var(--white-color)
+}
+
+.eEduction{
+    font-size: 19px;
+}
+
+.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 2px;
+    height: 32px;
+    background-color: var(--white-color)
+}
+
+.height-100 {
+    height: 100vh
+}
+
+@media screen and (min-width: 768px) {
+    body {
+        margin: calc(var(--header-height) + 1rem) 0 0 0;
+        padding-left: calc(var(--nav-width) + 2rem)
+    }
+
+    .header {
+        height: calc(var(--header-height) + 1rem);
+        padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
+    }
+
+    .header_img {
+        width: 40px;
+        height: 40px
+    }
+
+    .header_img img {
+        width: 45px
+    }
+
+    .l-navbar {
+        left: 0;
+        padding: 1rem 1rem 0 0
+    }
+
+    .show {
+        width: calc(var(--nav-width) + 156px)
+    }
+
+    .body-pd {
+        padding-left: calc(var(--nav-width) + 188px)
+    }
+}
+
+.king {
+    width: 100%;
+    height: 600px;
+}
+
+.shape {
+    position: relative;
+    top: 7.2%;
+    right: 2.5%;
+    width: 102.5%;
+    height: 653px;
+    background-color: #eee;
+}
+
+.navDiv {
+    width: 100%;
+    height: 7%;
+    border: 1px solid black;
+}
+
+.prince {
+    width: 100%;
+    height: 93%;
+    display: flex;
+}
+
+.part1 {
+    width: 60%;
+    height: 100%;
+}
+
+.yard1 {
+    position: relative;
+    top: 2%;
+    left: 2%;
+}
+
+.filter{
+    width: 95%;
+    height: 180px;
+    background-color: white;
+    box-shadow: 2px 2px 15px rgb(175, 174, 174);
+    border-radius: 5px;
+}
+
+.myFilterForm {
+    
+}
+
+.myData {
+    width: 95%;
+    height: 380px;
+    text-align: center;
+    overflow-y: scroll;
+    background-color: white;
+    box-shadow: 2px 2px 15px rgb(175, 174, 174);
+    border-radius: 5px;
+}
+
+.myData::-webkit-scrollbar {
+    display: none;
+}
+
+.part2 {
+    width: 40%;
+    height: 100%;
+}
+
+.yard2 {
+    position: relative;
+    top: 2%;
+    left: 2.5%;
+    width: 95%;
+    height: 85%;
+    background-color: white;
+    box-shadow: 2px 2px 15px rgb(175, 174, 174);
+    border-radius: 5px;
+}
