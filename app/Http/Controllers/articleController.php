@@ -40,7 +40,22 @@ class articleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = new Article();
+        try {
+            $article->categorie = request('categorie');
+            $article->code = request('code');
+            $article->designation = request('designation');
+            $article->status = request('status');
+            $article->pv = request('pv');
+            $article->pa = request('pa');
+            $article->uv = request('uv');
+            $article->ua = request('ua');
+
+            $article->save();
+            return redirect('/articles')->with('msg', "Added !");
+        } catch (\Throwable $th) {
+            return redirect('/articles')->with('msg', "One of these fields is empty !");
+        }
     }
 
     /**
@@ -74,7 +89,19 @@ class articleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $newData = $request->all();
+        $article = Article::findOrFail($id);
+        $article->categorie = $newData['categorie'];
+        $article->code = $newData['code'];
+        $article->designation = $newData['designation'];
+        $article->status = $newData['status'];
+        $article->pv = $newData['pv'];
+        $article->pa = $newData['pa'];
+        $article->uv = $newData['uv'];
+        $article->ua = $newData['ua'];
+
+        $article->save();
+        return redirect('/articles');
     }
 
     /**

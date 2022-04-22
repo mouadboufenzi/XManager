@@ -14,7 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('code');
+            $table->string('designation');
+            $table->string('status');
+            $table->string('categorie');
+            $table->double('pv');
+            $table->double('pa');
+            $table->double('uv');
+            $table->double('ua');
             $table->timestamps();
         });
     }

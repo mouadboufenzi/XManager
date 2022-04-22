@@ -2203,6 +2203,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     return l.addEventListener('click', colorLink);
   }); // Your code to run since DOM is loaded and ready
 });
+document.querySelector('#clear_btn').addEventListener('click', function () {
+  window.location.pathname = "/articles";
+});
 
 /***/ }),
 
