@@ -1,5 +1,9 @@
 @extends('layouts.layout')
 
+@section('title/addFile')
+    <title>XManager - Articles</title>
+@endsection
+
 @section('articles')
     active
 @endsection
@@ -66,7 +70,7 @@
                     <th>DESIGNATION</th>
                     <th>CATEGORIE</th>
                     <th id="id">STATUS</th>
-                    <th>PRIX DE VENTE</th>
+                    <th id="id">PRIX DE VENTE</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,7 +81,7 @@
                         <td>{{$article->designation}}</td>
                         <td>{{$article->categorie}}</td>
                         <td id="id"><span id="{{($article->status == "Actif") ? "g" : "r"}}">{{$article->status}}</span></td>
-                        <td>{{$article->pv}}</td>
+                        <td id="id">{{$article->pv}}</td>
                     </tr>
                 @endforeach
             </tbody>
