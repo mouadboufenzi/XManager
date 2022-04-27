@@ -24,10 +24,11 @@
                     </a>
                     <div class="nav_list"> 
                         {{--active--}}
-                        <a href="/" class="nav_link"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Home</span> </a> 
-                        <a href="/articles" class="nav_link"> <i class='bx bxs-cart nav_icon'></i> <span class="nav_name">Articles</span> </a> 
-                        <a href="#" class="nav_link"> <i class='bx bx-user nav_icon'></i><span class="nav_name">Clients</span> </a> 
-                        <a href="#" class="nav_link"> <i class='bx bx-store nav_icon'></i> <span class="nav_name">Fournisseurs</span> </a>  
+                        <a href="/" class="nav_link active"> <i class='bx bxs-home-alt-2 bx-tada bx-flip-vertical nav_icon' ></i> <span class="nav_name">Home</span> </a> 
+                        <a href="/articles" class="nav_link @yield('articles')"> <i class='bx bxs-package bx-tada bx-flip-vertical nav_icon'></i> <span class="nav_name">Articles</span> </a> 
+                        <a href="/clients" class="nav_link @yield('clients')"> <i class='bx bxs-face bx-tada bx-flip-vertical nav_icon' ></i><span class="nav_name">Clients</span> </a> 
+                        <a href="/fournisseurs" class="nav_link @yield('fournisseurs')"> <i class='bx bx-store-alt bx-tada bx-flip-vertical nav_icon' ></i> <span class="nav_name">Fournisseurs</span> </a>
+                        <a href="/commandes" class="nav_link @yield('commande')"> <i class='bx bxs-cart bx-tada bx-flip-vertical nav_icon' ></i>  <span class="nav_name">Commandes</span> </a>  
                     </div>
                 </div>
             </nav>

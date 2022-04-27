@@ -104,12 +104,11 @@
                     <span>Famille : </span>
                     <select id="categorie" name="famille" class="form-select" aria-label="Default select example">
                         <option selected>Famille</option>
-                        <option value="Particulier" @if (isset($id) && $that_fournisseur->famille == "Particulier")
-                            selected
-                        @endif>Particulier</option>
-                        <option value="GrandCompte" @if (isset($id) && $that_fournisseur->famille == "GrandCompte")
-                            selected
-                        @endif>GrandCompte</option>
+                        @foreach ($familles as $famille)
+                            <option value="{{$famille->famille}}" @if (isset($id) && $that_fournisseur->famille == "{{$famille->famille}}")
+                                selected
+                            @endif>{{$famille->famille}}</option>
+                        @endforeach
                     </select>
 
                     <span>Status : </span>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 
 class articleController extends Controller
@@ -14,12 +15,13 @@ class articleController extends Controller
      */
     public function index($id = null)
     {
+        $categories = Categorie::all();
         $articles = Article::all();
         if ($id != null) {
             $that_article = Article::findOrFail($id);
-            return view('articles', ['articles' => $articles, 'that_article' => $that_article, 'id' => $id]);
+            return view('articles', ['articles' => $articles, 'categories' => $categories, 'that_article' => $that_article, 'id' => $id]);
         }
-        return view('articles', ['articles' => $articles]);
+        return view('articles', ['articles' => $articles, 'categories' => $categories]);
     }
 
     /**

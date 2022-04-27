@@ -44,27 +44,11 @@
                 </div>
                 <div class="prince">
                     <div class="part1">
-                        <div class="yard1">
-                            <div class="filter">
-                                <div class="myFilterForm">
-                                    @yield('filter-form')
-                                </div>
-                            </div>
-                            <br>
-                            <div class="myData">
-                                @yield('table')
-                            </div>
-                        </div>
+                        @yield('table')
                     </div>
     
                     <div class="part2">
-                        <div class="yard2">
-                            <div id="tsum-tabs">
-                                <main>
-                                    @yield('tabs')
-                                </main>
-                            </div>
-                        </div>
+                        @yield('tabs')
                     </div>
                 </div>
             </div>

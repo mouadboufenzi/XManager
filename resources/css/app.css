@@ -241,6 +241,17 @@ a {
     bottom: 3px;
 }
 
+.fcmd1 {
+    left: 60px;
+}
+
+.fcmd2 {
+    left: 60px;
+}
+
+.fcmd3 {
+    left: 50px;
+}
 
 .king {
     width: 100%;
@@ -270,6 +281,7 @@ a {
 .part1 {
     width: 60%;
     height: 100%;
+
 }
 
 .yard1 {
@@ -282,7 +294,7 @@ a {
     width: 95%;
     height: 160px;
     background-color: white;
-    box-shadow: 1px 1px 2px rgb(175, 174, 174);
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
     border-radius: 5px;
 }
 
@@ -336,7 +348,7 @@ a {
     width: 95%;
     height: 380px;
     background-color: white;
-    box-shadow: 1px 1px 2px rgb(175, 174, 174);
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
     border-radius: 5px;
 }
 
@@ -349,6 +361,26 @@ a {
     overflow-y: scroll;
     border: 0.5px solid rgb(224, 220, 220);
     border-radius: 5px;
+}
+
+.datacmd {
+    top: 1%;
+    width: 95%;
+    left: 2.5%;
+    height: 550px;
+    background-color: white;
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
+}
+
+.fix {
+    position:sticky;
+    z-index: 30;
+    top: 0;
+    background-color: white;
+}
+
+.icmd {
+    height: 28px;
 }
 
 .dataFieldFour {
@@ -423,8 +455,12 @@ a {
     width: 100%;
     height: 100%;
     background-color: white;
-    box-shadow: 1px 1px 2px rgb(175, 174, 174);
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
     border-radius: 5px;
+}
+
+.yardcmd {
+    height: 550px;
 }
 
 #tsum-tabs p {
@@ -500,8 +536,6 @@ a {
     }
   }
   
-  .myForm {
-  }
   
   .myForm input[type="text"], .myForm select {
       margin-top: 0;

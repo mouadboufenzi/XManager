@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\validate;
+use App\Models\AgentCommercial;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Models\Famille;
+use App\Http\Requests\validateClient;
 
 class clientController extends Controller
 {
@@ -14,13 +19,15 @@ class clientController extends Controller
      */
     public function index($id = null)
     {
-        //
+        $familles = Famille::all();
+        $categories = Categorie::all();
+        $agents = AgentCommercial::all();
         $clients = Client::all();
         if ($id != null) {
             $that_client = Client::findOrFail($id);
-            return view('clients', ['clients' => $clients, 'that_client' => $that_client, 'id' => $id]);
+            return view('clients', ['clients' => $clients, 'familles' => $familles, 'categories' => $categories, 'agents' => $agents, 'that_client' => $that_client, 'id' => $id]);
         }
-        return view('clients', ['clients' => $clients]);
+        return view('clients', ['clients' => $clients, 'familles' => $familles, 'categories' => $categories, 'agents' => $agents]);
     }
 
     /**
@@ -39,42 +46,46 @@ class clientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(validateClient $request)
     {
         //
         $client = new Client();
+        $request->validated();
 
-        try {
-            $client->code = request('code');
-            $client->famille = request('famille');
-            $client->categorie = request('categorie');
-            $client->status = request('status');
-            $client->raison_social = request('raison_social');
-            $client->if = request('if');
-            $client->ice = request('ice');
-            $client->rc = request('rc');
-            $client->patente = request('patente');
-            $client->cin = request('cin');
-            $client->agent_commercial = request('agent_commercial');
-            $client->nom_agent_commercial = request('nom_agent_commercial');
-            $client->tel_agent_commercial = request('tel_agent_commercial');
-            $client->mode_paiement = request('mode_paiement');
-            $client->nom = request('nom');
-            $client->fonction = request('fonction');
-            $client->email = request('email');
-            $client->fix = request('fix');
-            $client->fax = request('fax');
-            $client->portable = request('portable');
-            $client->adresse = request('adresse');
-            $client->ville = request('ville');
-            $client->pays = request('pays');
+        $client = Client::create($request);
+        $client->save();
+
+        // if (request('famille') == "Particulier") {
+        //     $client->code = "CEP".Client::count() + 1;
+        // } else {
+        //     $client->code = "CGC".Client::count() + 1;
+        // }
+        // $client->famille = request('famille');
+        // $client->categorie = request('categorie');
+        // $client->status = request('status');
+        // $client->raison_social = request('raison_social');
+        // $client->if = request('if');
+        // $client->ice = request('ice');
+        // $client->rc = request('rc');
+        // $client->patente = request('patente');
+        // $client->cin = request('cin');
+        // $client->agent_commercial = request('agent_commercial');
+        // // $client->nom_agent_commercial = request('nom_agent_commercial');
+        // // $client->tel_agent_commercial = request('tel_agent_commercial');
+        // $client->mode_paiement = request('mode_paiement');
+        // $client->nom = request('nom');
+        // $client->fonction = request('fonction');
+        // $client->email = request('email');
+        // $client->fix = request('fix');
+        // $client->fax = request('fax');
+        // $client->portable = request('portable');
+        // $client->adresse = request('adresse');
+        // $client->ville = request('ville');
+        // $client->pays = request('pays');
 
 
-            $client->save();
-            return redirect('/clients')->with('msg', "Added !");
-        } catch (\Throwable $th) {
-            return redirect('/clients')->with('msg', "One of these fields is empty !");
-        }
+        // $client->save();
+        return redirect('/clients')->with('msg', "Added !");
     }
 
     /**

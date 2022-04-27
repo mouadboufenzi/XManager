@@ -108,15 +108,11 @@
                     <span>Categorie : </span>
                     <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
                         <option selected>Categorie</option>
-                        <option value="Categorie 1" @if (isset($id) && $that_article->categorie == "Categorie 1")
-                            selected
-                        @endif>Categorie 1</option>
-                        <option value="Categorie 2" @if (isset($id) && $that_article->categorie == "Categorie 2")
-                            selected
-                        @endif>Categorie 2</option>
-                        <option value="Categorie 3" @if (isset($id) && $that_article->categorie == "Categorie 3")
-                            selected
-                        @endif>Categorie 3</option>
+                        @foreach ($categories as $categorie)
+                            <option value="{{$categorie->categorie}}" @if (isset($id) && $that_article->categorie == "{{$categorie->categorie}}")
+                                selected
+                            @endif>{{$categorie->categorie}}</option>
+                        @endforeach
                     </select>
 
                     <span>Code : </span>

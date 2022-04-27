@@ -101,30 +101,32 @@
                     <span>Famille : </span>
                     <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
                         <option selected>Famille</option>
-                        <option value="Particulier" @if (isset($id) && $that_client->categorie == "Particulier")
-                            selected
-                        @endif>Particulier</option>
-                        <option value="GrandCompte" @if (isset($id) && $that_client->categorie == "GrandCompte")
-                            selected
-                        @endif>GrandCompte</option>
+                        @foreach ($familles as $famille)
+                            <option value="{{$famille->famille}}" @if (isset($id) && $that_client->famille == "{{$famille->famille}}")
+                                selected
+                            @endif>{{$famille->famille}}</option>
+                        @endforeach
                     </select>
 
                     <span>Categorie : </span>
                     <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
                         <option selected>Categorie</option>
-                        <option value="Categorie 1" @if (isset($id) && $that_client->categorie == "Categorie 1")
-                            selected
-                        @endif>Categorie 1</option>
-                        <option value="Categorie 2" @if (isset($id) && $that_client->categorie == "Categorie 2")
-                            selected
-                        @endif>Categorie 2</option>
-                        <option value="Categorie 3" @if (isset($id) && $that_client->categorie == "Categorie 3")
-                            selected
-                        @endif>Categorie 3</option>
+                        @foreach ($categories as $categorie)
+                            <option value="{{$categorie->categorie}}" @if (isset($id) && $that_client->categorie == "{{$categorie->categorie}}")
+                                selected
+                            @endif>{{$categorie->categorie}}</option>
+                        @endforeach
                     </select>
                     
                     <span>Agent Commercial : </span>
-                    <input id="agentcommercial" name="agentcommercial" type="text" class="form-control" placeholder="Agent Commercial" value="{{isset($id) ? $that_client->agent_commercial : ''}}">
+                    <select id="categorie" name="agent_commercial" class="form-select" aria-label="Default select example">
+                        <option selected>Agent Commercial</option>
+                        @foreach ($agents as $agent)
+                            <option value="{{$agent->nom}}" @if (isset($id) && $that_client->agent == "{{$agent->nom}}")
+                                selected
+                            @endif>{{$agent->nom}}</option>
+                        @endforeach
+                    </select>
                     {{-- <input id="nom_agent_commercial" name="nom_agent_commercial" type="hidden" class="form-control" placeholder="Nom Agent Commercial" value="{{isset($that_client->agent_commercial) ? '}}"> --}}
 
                     <span>Status : </span>
@@ -210,7 +212,6 @@
                 id="clear_btnC">
                     Annuler
                 </button>
-            </form>
         </div>
     </section>
 
@@ -255,7 +256,6 @@
                 id="clear_btnC">
                     Annuler
                 </button>
-            </form>
         </div>
     </section>
 

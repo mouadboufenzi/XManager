@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('famille');
             $table->string('categorie');
             $table->string('status');
-            $table->string('raison_social');
+            $table->string('raison_social')->nullable('true');
             $table->string('if');
             $table->string('ice');
             $table->string('rc');

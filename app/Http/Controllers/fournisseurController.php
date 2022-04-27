@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Famille;
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 
@@ -14,12 +15,14 @@ class fournisseurController extends Controller
      */
     public function index($id = null)
     {
+        $familles = Famille::all();
         $fournisseurs = Fournisseur::all();
         if ($id != null) {
             $that_fournisseur = Fournisseur::findOrFail($id);
-            return view('fournisseurs', ['fournisseurs' => $fournisseurs, 'that_fournisseur' => $that_fournisseur, 'id' => $id]);
+            return view('fournisseurs', ['fournisseurs' => $fournisseurs, 'familles' => $familles, 'that_fournisseur' => $that_fournisseur, 'id' => $id]);
         }
-        return view('fournisseurs', ['fournisseurs' => $fournisseurs]);
+        
+        return view('fournisseurs', ['fournisseurs' => $fournisseurs, 'familles' => $familles]);
     }
 
     /**
@@ -41,20 +44,11 @@ class fournisseurController extends Controller
     public function store(Request $request)
     {
         $fournisseur = new Fournisseur();
-        $last = Fournisseur::latest()->get();
-            if (request('famille') == "Particulier") {
-                if(isset($last->id)) {
-                    $fournisseur->code = "CEP".($last->id + 1)."";
-                } else {
-                    $fournisseur->code = "CEP1";
-                }
-            } else {
-                if(isset($last->id)) {
-                    $fournisseur->code = "CGC".($last->id + 1)."";
-                } else {
-                    $fournisseur->code = "CGC1";
-                }
-            }
+        if (request('famille') == "Particulier") {
+            $fournisseur->code = "CEP".Fournisseur::count() + 1;
+        } else {
+            $fournisseur->code = "CGC".Fournisseur::count() + 1;
+        }
             $fournisseur->famille = request('famille');            
             $fournisseur->status = request('status');
             $fournisseur->raison_social = request('raison_social');
