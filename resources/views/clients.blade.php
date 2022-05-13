@@ -99,7 +99,7 @@
                 <input id="store_route" type="hidden" id="store_route" value="{{route('client.store')}}">
                 <div class="form-group">
                     <span>Famille : </span>
-                    <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
+                    <select id="categorie" name="famille" class="form-select" aria-label="Default select example">
                         <option selected>Famille</option>
                         @foreach ($familles as $famille)
                             <option value="{{$famille->famille}}" @if (isset($id) && $that_client->famille == "{{$famille->famille}}")
@@ -112,7 +112,7 @@
                     <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
                         <option selected>Categorie</option>
                         @foreach ($categories as $categorie)
-                            <option value="{{$categorie->categorie}}" @if (isset($id) && $that_client->categorie == "{{$categorie->categorie}}")
+                        <option value="{{$categorie->categorie}}" @if (isset($id) && $that_client->categorie == "{{$categorie->categorie}}")
                                 selected
                             @endif>{{$categorie->categorie}}</option>
                         @endforeach
@@ -122,7 +122,7 @@
                     <select id="categorie" name="agent_commercial" class="form-select" aria-label="Default select example">
                         <option selected>Agent Commercial</option>
                         @foreach ($agents as $agent)
-                            <option value="{{$agent->nom}}" @if (isset($id) && $that_client->agent == "{{$agent->nom}}")
+                            <option value="{{$agent->nom}}" @if (isset($id) && $that_client->agent_commercial == "{{$agent->nom}}")
                                 selected
                             @endif>{{$agent->nom}}</option>
                         @endforeach
@@ -157,6 +157,16 @@
                 <br>
                 {{session('msg')}}
         </div>
+        <br>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </section>
 
     <section id="content2">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FournisseurValidationRequest;
 use App\Models\Famille;
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
@@ -41,32 +42,32 @@ class fournisseurController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FournisseurValidationRequest $request)
     {
         $fournisseur = new Fournisseur();
-        if (request('famille') == "Particulier") {
+        if ($request['famille'] == "Particulier") {
             $fournisseur->code = "CEP".Fournisseur::count() + 1;
         } else {
             $fournisseur->code = "CGC".Fournisseur::count() + 1;
         }
-            $fournisseur->famille = request('famille');            
-            $fournisseur->status = request('status');
-            $fournisseur->raison_social = request('raison_social');
-            $fournisseur->if = request('if');
-            $fournisseur->ice = request('ice');
-            $fournisseur->rc = request('rc');
-            $fournisseur->patente = request('patente');
-            $fournisseur->cin = request('cin');
-            $fournisseur->mode_paiement = request('mode_paiment');
-            $fournisseur->nom = request('nom');
-            $fournisseur->fonction = request('fonction');
-            $fournisseur->email = request('email');
-            $fournisseur->fix = request('fix');
-            $fournisseur->fax = request('fax');
-            $fournisseur->portable = request('portable');
-            $fournisseur->adresse = request('adresse');
-            $fournisseur->ville = request('ville');
-            $fournisseur->pays = request('pays');
+            $fournisseur->famille = $request['famille'];            
+            $fournisseur->status = $request['status'];
+            $fournisseur->raison_social = $request['raison_social'];
+            $fournisseur->if = $request['if'];
+            $fournisseur->ice = $request['ice'];
+            $fournisseur->rc = $request['rc'];
+            $fournisseur->patente = $request['patente'];
+            $fournisseur->cin = $request['cin'];
+            $fournisseur->mode_paiement = $request['mode_paiement'];
+            $fournisseur->nom = $request['nom'];
+            $fournisseur->fonction = $request['fonction'];
+            $fournisseur->email = $request['email'];
+            $fournisseur->fix = $request['fix'];
+            $fournisseur->fax = $request['fax'];
+            $fournisseur->portable = $request['portable'];
+            $fournisseur->adresse = $request['adresse'];
+            $fournisseur->ville = $request['ville'];
+            $fournisseur->pays = $request['pays'];
             if (request('remise_1') != "" && request('remise_2') == "" && request('remise_3') == "") {
                 $fournisseur->remise_1 = request('remise_1');
             } else if (request('remise_1') != "" && request('remise_2') != "" && request('remise_3') == "") {

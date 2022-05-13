@@ -10,4 +10,9 @@ class Fournisseur extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    public function purchase_orders()
+    {
+        return $this->hasMany(Purchase_order::class);
+    }
 }

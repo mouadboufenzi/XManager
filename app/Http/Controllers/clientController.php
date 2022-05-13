@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\validate;
+use App\Http\Requests\TestRequest;
 use App\Models\AgentCommercial;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
@@ -46,45 +46,36 @@ class clientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(validateClient $request)
+    public function store(TestRequest $request)
     {
-        //
+        
         $client = new Client();
-        $request->validated();
-
-        $client = Client::create($request);
+        if ($request['famille'] == "Particulier") {
+            $client->code = "CEP".Client::count() + 1;
+        } else {
+            $client->code = "CGC".Client::count() + 1;
+        }
+        $client->famille = $request['famille'];
+        $client->categorie = $request['categorie'];
+        $client->status = $request['status'];
+        $client->raison_social = $request['raison_social'];
+        $client->if = $request['if'];
+        $client->ice = $request['ice'];
+        $client->rc = $request['rc'];
+        $client->patente = $request['patente'];
+        $client->cin = $request['cin'];
+        $client->agent_commercial = $request['agent_commercial'];
+        $client->mode_paiement = $request['mode_paiement'];
+        $client->nom = $request['nom'];
+        $client->fonction = $request['fonction'];
+        $client->email = $request['email'];
+        $client->fix = $request['fix'];
+        $client->fax = $request['fax'];
+        $client->portable = $request['portable'];
+        $client->adresse = $request['adresse'];
+        $client->ville = $request['ville'];
+        $client->pays = $request['pays'];
         $client->save();
-
-        // if (request('famille') == "Particulier") {
-        //     $client->code = "CEP".Client::count() + 1;
-        // } else {
-        //     $client->code = "CGC".Client::count() + 1;
-        // }
-        // $client->famille = request('famille');
-        // $client->categorie = request('categorie');
-        // $client->status = request('status');
-        // $client->raison_social = request('raison_social');
-        // $client->if = request('if');
-        // $client->ice = request('ice');
-        // $client->rc = request('rc');
-        // $client->patente = request('patente');
-        // $client->cin = request('cin');
-        // $client->agent_commercial = request('agent_commercial');
-        // // $client->nom_agent_commercial = request('nom_agent_commercial');
-        // // $client->tel_agent_commercial = request('tel_agent_commercial');
-        // $client->mode_paiement = request('mode_paiement');
-        // $client->nom = request('nom');
-        // $client->fonction = request('fonction');
-        // $client->email = request('email');
-        // $client->fix = request('fix');
-        // $client->fax = request('fax');
-        // $client->portable = request('portable');
-        // $client->adresse = request('adresse');
-        // $client->ville = request('ville');
-        // $client->pays = request('pays');
-
-
-        // $client->save();
         return redirect('/clients')->with('msg', "Added !");
     }
 

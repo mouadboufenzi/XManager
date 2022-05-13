@@ -4,13 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Vehicule extends Model
+class Purchase_order_product extends Model
 {
+    protected $table = 'puchase_order_product';
     use HasFactory;
-
-    public function purchase_order()
-    {
-        return $this->belongsTo(Purchase_order::class);
-    }
 }

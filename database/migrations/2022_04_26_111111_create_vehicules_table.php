@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('vehicules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('matricule');
+            $table->string('matricule')->unique();
             $table->string('mec');
             $table->timestamps();
         });

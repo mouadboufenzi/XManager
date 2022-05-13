@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class validateClient extends FormRequest
+class FournisseurValidationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,24 +25,22 @@ class validateClient extends FormRequest
     {
         return [
             'famille' => 'required',
-            'categorie' => 'required',
             'status' => 'required',
             'if' => 'required',
-            'ice' => 'required',
+            'ice' => 'required|integer|digits:15',
             'rc' => 'required',
-            'patente' => 'required',
+            'patente' => 'required|integer',
             'mode_paiement' => 'required',
-            'cin' => 'required',
-            'agent_commercial' => 'required',
-            'nom' => 'required',
-            'fonction' => 'required',
-            'email' => 'required',
-            'fix' => 'required',
-            'fax' => 'required',
-            'portable' => 'required',
-            'adresse' => 'required',
-            'ville' => 'required',
-            'pays' => 'required'
+            'cin' => 'required|min:10|max:10',
+            'nom' => 'required|max:255',
+            'fonction' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'fix' => 'required|max:255',
+            'fax' => 'required|max:255',
+            'portable' => 'required|max:255',
+            'adresse' => 'required|max:255',
+            'ville' => 'required|max:255',
+            'pays' => 'required|max:255',
         ];
     }
 }

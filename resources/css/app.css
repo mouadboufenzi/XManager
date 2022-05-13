@@ -3,6 +3,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
 @import url('https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css');
 
+.iconAct {
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.iconAct i {
+    font-size: 18px;
+    color: #7c73e6;
+    cursor: pointer;
+}
 
 :root {
     --header-height: 1.7rem;
@@ -363,14 +374,22 @@ a {
     border-radius: 5px;
 }
 
+.dataField::-webkit-scrollbar {
+    display: none;
+}
+
 .datacmd {
     top: 1%;
-    width: 95%;
+    width: 105%;
     left: 2.5%;
     height: 550px;
     background-color: white;
     box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
 }
+
+/* .tabInp {
+    font-size: 12px;
+} */
 
 .fix {
     position:sticky;
@@ -460,6 +479,8 @@ a {
 }
 
 .yardcmd {
+    margin-left: 62px;
+    width: 90%;
     height: 550px;
 }
 

@@ -35,7 +35,11 @@ Route::post('/clients/{id?}', [clientController::class, 'store'])->name('client.
 Route::post('/famille/{id?}', [familleController::class, 'store'])->name('famille.store');
 Route::post('/agent/{id?}', [agent_commercialController::class, 'store'])->name('agent.store');
 Route::post('/categorie/{id?}', [categorieController::class, 'store'])->name('categorie.store');
+Route::post('/commandes/{id?}', [commandeController::class, 'store'])->name('commande.store');
 
 Route::put('/articles/{id?}', [articleController::class, 'update'])->name('article.update');
 Route::put('/fournisseurs/{id?}', [fournisseurController::class, 'update'])->name('fournisseur.update');
 Route::put('/clients/{id?}', [clientController::class, 'update'])->name('client.update');
+
+
+Route::delete('/commandes/{id?}', [commandeController::class, 'destroy'])->name('commande.destroy');

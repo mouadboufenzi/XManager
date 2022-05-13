@@ -139,6 +139,16 @@
                 <br>
                 {{session('msg')}}
         </div>
+        <br>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </section>
 
     <section id="content2">
@@ -163,15 +173,15 @@
                     <input id="ua" name="cin" type="text" class="form-control" value="{{isset($id) ? $that_fournisseur->cin : ''}}" placeholder="CIN">
 
                     <span>Mode de paiment : </span>
-                    <select id="status" name="mode_paiment" class="form-select">
-                        <option selected>Mode de paiment</option>
-                        <option value="Cheque" @if (isset($id) && $that_fournisseur->mode_paiment == "Cheque")
+                    <select id="status" name="mode_paiement" class="form-select">
+                        <option selected>Mode de paiement</option>
+                        <option value="Cheque" @if (isset($id) && $that_fournisseur->mode_paiement == "Cheque")
                             selected
                         @endif>Cheque</option>
                         <option value="Espece" @if (isset($id) && $that_fournisseur->mode_paiement == "Espece")
                             selected
                         @endif>Espece</option>
-                        <option value="Carte bancaire" @if (isset($id) && $that_fournisseur->mode_paiment == "Carte bancaire")
+                        <option value="Carte bancaire" @if (isset($id) && $that_fournisseur->mode_paiement == "Carte bancaire")
                             selected
                         @endif>Carte bancaire</option>
                     </select>

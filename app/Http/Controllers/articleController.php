@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleValidationRequest;
 use App\Models\Article;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
@@ -40,18 +41,19 @@ class articleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleValidationRequest $request)
     {
+        $validatedData = $request->validated();
         $article = new Article();
         try {
-            $article->categorie = request('categorie');
-            $article->code = request('code');
-            $article->designation = request('designation');
-            $article->status = request('status');
-            $article->pv = request('pv');
-            $article->pa = request('pa');
-            $article->uv = request('uv');
-            $article->ua = request('ua');
+            $article->categorie = $request['categorie'];
+            $article->code = $request['code'];
+            $article->designation = $request['designation'];
+            $article->status = $request['status'];
+            $article->pv = $request['pv'];
+            $article->pa = $request['pa'];
+            $article->uv = $request['uv'];
+            $article->ua = $request['ua'];
 
             $article->save();
             return redirect('/articles')->with('msg', "Added !");

@@ -26,52 +26,37 @@
         <table id="articles">
             <thead>
                 <tr>
-                    <th id="id">ARTICLE</th>
-                    <th id="id">DESIGNATION</th>
-                    <th id="id">P.A.</th>
-                    <th id="id">QUANTITE</th>
-                    <th id="id">REMISE</th>
-                    <th id="id">REMISE UTILISATEUR</th>
-                    <th id="id">PRIX NET</th>
-                    <th id="id">TOTAL</th>
+                    <th id="id">Code commande</th>
+                    <th id="id">Fournisseur</th>
+                    <th id="id">Vehicule</th>
+                    <th id="id">Total</th>
+                    <th id="id">Status</th>
+                    <th id="id">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="fix">
-                    <td id="id">
-                        <select name="status" class="form-select icmd" aria-label="Default select example" placeholder="text">
-                        </select>
-                    </td>
-                    <td id="id"><input name="" type="text" class="form-control icmd" placeholder="DESIGNATION"></td>
-                    <td id="id"><input name="" type="text" class="form-control icmd" placeholder="P.A."></td>
-                    <td id="id"><input name="" type="text" class="form-control icmd" placeholder="QUANTITE"></td>
-                    <td id="id"><input name="" type="text" class="form-control icmd" placeholder="REMISE"></td>
-                    <td id="id"><input name="" type="text" class="form-control icmd" placeholder="REMISE UTILISATEUR"></td>
-                    <td id="id"><input name="" type="text" class="form-control icmd" placeholder="PRIX NET"></td>
-                    <td id="id"><input name="" type="text" class="form-control icmd" placeholder="TOTAL"></td>
-                </tr>
-                @for ($i = 0; $i < 100; $i++)
+                @foreach ($op as $item)
                     <tr>
-                        <td id="id">AAAAAA</td>
-                        <td id="id">AAAAAA</td>
-                        <td id="id">AAAAAA</td>
-                        <td id="id">AAAAAAA</td>
-                        <td id="id">AAAAAAA</td>
-                        <td id="id">AAAAAAA</td>
-                        <td id="id">AAAAA</td>
-                        <td id="id">AAAAAAAAAAA</td>
+                        @foreach ($articles as $article)
+                            @if ($article->id == $item->article_id)
+                                <td id="id">{{$article->code}}</td>
+                            @endif
+                        @endforeach
+                        <td id="id">{{$item->pa }}</td>
+                        <td id="id">{{$item->pa}}</td>
+                        <td id="id">{{$item->quantite}}</td>
+                        <td id="id">{{$item->remise}}</td>
+                        <td id="id">
+                            <form action="{{route('commande.destroy', ['id' => $id])}}" method="post">
+                                @csrf
+                                @method('delete')
+                                    <button name="delete" value="{{$item->id}}" class="iconAct" type="submit"> 
+                                        <i class="fa-solid fa-circle-minus fcmd1s"></i>
+                                    </button>
+                            </form>
+                        </td>
                     </tr>
-                @endfor
-                {{-- @foreach ($articles as $article)
-                    <tr>
-                        <td id="id"><a href="/articles/{{$article->id}}">{{$loop->index + 1}}</a></td>
-                        <td>{{$article->code}}</td>
-                        <td>{{$article->designation}}</td>
-                        <td>{{$article->categorie}}</td>
-                        <td id="id"><span id="{{($article->status == "Actif") ? "g" : "r"}}">{{$article->status}}</span></td>
-                        <td id="id">{{$article->pv}}</td>
-                    </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -80,49 +65,37 @@
 @section('tabs')
     <div class="yard2 yardcmd">
         <div id="tsum-tabs">
-            <main>
+            <form id="myForm" action="{{route('commande.store')}}" method="post">
+                @csrf
+                <main>
                 <input id="tab1" type="radio" name="tabs" checked>
-                <label for="tab1">Identifiant</label>
+                <label for="tab1">Commande</label>
 
                 <input id="tab2" type="radio" name="tabs">
-                <label for="tab2">Gestion</label>
+                <label for="tab2">Vehicule</label>
+
+                <input id="tab3" type="radio" name="tabs">
+                <label for="tab3">Articles</label>
 
                 <section id="content1">
                     <div class="myForm">
-                        <form id="myForm" action="" method="post">
-                            @csrf
-                            @if (isset($id))
-                                @method('put')
-                            @endif
                             <input id="store_route" type="hidden" id="store_route" value="{{route('article.store')}}">
                             <div class="form-group">
-                                <span>Categorie : </span>
-                                <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
-                                    <option selected>Categorie</option>
-                                    {{-- @foreach ($categories as $categorie)
-                                        <option value="{{$categorie->categorie}}" @if (isset($id) && $that_article->categorie == "{{$categorie->categorie}}")
-                                            selected
-                                        @endif>{{$categorie->categorie}}</option>
-                                    @endforeach --}}
+                                <span>Code fournisseurs : </span>
+                                <select id="categorie" name="code" class="form-select" aria-label="Default select example">
+                                    <option selected>Code Fournisseur</option>
+                                    @foreach ($fournisseurs as $fournisseur)
+                                        <option value="{{$fournisseur->code}}">{{$fournisseur->code}}</option>
+                                    @endforeach
                                 </select>
 
-                                <span>Code : </span>
-                                <input id="code" name="code" type="text" class="form-control" placeholder="Code" value="">
-
-                                <span>Designation : </span>
-                                <input id="designation" name="designation" type="text" class="form-control" placeholder="Designation" value="">
-
-                                <span>Status : </span>
-                                <select id="status" name="status" class="form-select" aria-label="Default select example" placeholder="text">
-                                    <option selected>Status</option>
-                                    <option value="Actif">Actif</option>
-                                    <option value="Inactif">Inactif</option>
-                                </select>
+                                <span>Remise : </span>
+                                <input id="pv" name="remise" type="text" class="form-control" value="" placeholder="Remise">
                             </div>
                             <button onMouseOver="this.style.color='#7c73e6' ; this.style.background='white'; this.style.borderColor='#7c73e6'"
                             onMouseOut="this.style.color='white' ; this.style.background='#7c73e6'" 
                             style="color: white; background: #7c73e6; transition-duration: 0.4s; border:1px solid #7c73e6 ;" 
-                            type="submit" class="btn btn-primary ed"
+                            type="submit" name="action" value="enregistrer" class="btn btn-primary ed"
                             id="submit_btn">
                                 {{isset($id) ? "Modifier" : "Enregistrer"}}
                             </button>
@@ -135,31 +108,76 @@
                             </button>
                             <br>
                             {{session('msg')}}
+                            <br>
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div><br />
+                            @endif
                     </div>
                 </section>
 
                 <section id="content2">
                     <div class="myForm">
                             <div class="form-group">
-                                <span>Prix de vente: </span>
-                                <input id="pv" name="pv" type="text" class="form-control" value="" placeholder="P.V.">
+                                <span>Matricule : </span>
+                                <input id="matricule" name="matricule" type="text" class="form-control" value="" placeholder="Matricule">
 
-                                <span>Prix d'achat : </span>
-                                <input id="pa" name="pa" type="text" class="form-control" value="" placeholder="P.A.">
-
-                                <span>Unite de vente : </span>
-                                <input id="uv" name="uv" type="text" class="form-control" value="" placeholder="U.V.">
-
-                                <span>Unite d'achat : </span>
-                                <input id="ua" name="ua" type="text" class="form-control" value="" placeholder="U.A">
-                            </div>
-                            <div class="form-groupPrice">
-                                
+                                <span>MEC : </span>
+                                <input id="mec" name="mec" type="text" class="form-control" value="" placeholder="MEC">
                             </div>
                             <button onMouseOver="this.style.color='#7c73e6' ; this.style.background='white'; this.style.borderColor='#7c73e6'"
                             onMouseOut="this.style.color='white' ; this.style.background='#7c73e6'" 
                             style="color: white; background: #7c73e6; transition-duration: 0.4s; border:1px solid #7c73e6 ;" 
                             type="submit" class="btn btn-primary ed"
+                            id="submit_btn">
+                                Enregistrer
+                            </button>
+                            <button onMouseOver="this.style.color='white' ; this.style.background='#7c73e6'; this.style.borderColor='#7c73e6'"
+                            onMouseOut="this.style.color='#7c73e6' ; this.style.background='white'" 
+                            style="float: right; color: #7c73e6; background: white; transition-duration: 0.4s; border:1px solid #7c73e6 ;" 
+                            type="button" class="btn btn-primary ed"
+                            id="clear_btn">
+                                Annuler
+                            </button>
+                    </div>
+                </section>
+
+                <section id="content3">
+                    <div class="myForm">
+                            <input id="store_route" type="hidden" id="store_route" value="{{route('article.store')}}">
+                            <div class="form-group">
+                                <span>Article : </span>
+                                <select name="code_article" class="form-select" aria-label="Default select example" placeholder="text">
+                                    <option selected>Select</option>
+                                    @foreach ($articles as $article)
+                                        <option value="{{$article->code}}">{{$article->code}}</option>
+                                    @endforeach
+                                </select>
+
+                                <span>Designation : </span>
+                                <input  name="designation" type="text" class="form-control" placeholder="Designation">
+
+                                <span>P.A : </span>
+                                <input  name="pa" type="text" class="form-control" placeholder="P.A">
+
+                                <span>Quantite : </span>
+                                <input  name="quantite" type="text" class="form-control" placeholder="Quantite">
+
+                                <span>Remise : </span>
+                                <input  name="remise_article" type="text" class="form-control" placeholder="Remise">
+
+                                <span>Remise utilisateur : </span>
+                                <input  name="remise_utilisateur" type="text" class="form-control" placeholder="Remise utilisateur">
+                            </div>
+                            <button onMouseOver="this.style.color='#7c73e6' ; this.style.background='white'; this.style.borderColor='#7c73e6'"
+                            onMouseOut="this.style.color='white' ; this.style.background='#7c73e6'" 
+                            style="color: white; background: #7c73e6; transition-duration: 0.4s; border:1px solid #7c73e6 ;" 
+                            type="submit" name="action" value="enregistrer" class="btn btn-primary ed"
                             id="submit_btn">
                                 {{isset($id) ? "Modifier" : "Enregistrer"}}
                             </button>
@@ -170,8 +188,21 @@
                             id="clear_btn">
                                 Annuler
                             </button>
-                        </form>
+                            <br>
+                            {{session('msg')}}
+                            <br>
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div><br />
+                            @endif
                     </div>
+            </form>
+
                 </section>
             </main>
         </div>
