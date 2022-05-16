@@ -40,6 +40,7 @@ Route::post('/commandes/{id?}', [commandeController::class, 'store'])->name('com
 Route::put('/articles/{id?}', [articleController::class, 'update'])->name('article.update');
 Route::put('/fournisseurs/{id?}', [fournisseurController::class, 'update'])->name('fournisseur.update');
 Route::put('/clients/{id?}', [clientController::class, 'update'])->name('client.update');
+Route::put('/commandes/{id?}', [commandeController::class, 'create'])->name('commande.create');
 
 
 Route::delete('/commandes/{id?}', [commandeController::class, 'destroy'])->name('commande.destroy');

@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
@@ -14,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('puchase_order_product', function (Blueprint $table) {
+        Schema::create('article_commande', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('purchase_order_id')->constrained('purchase_orders')->onDelete('cascade');
+            $table->foreignId('commande_id')->nullable(true)->constrained('commandes')->onDelete('cascade');
             $table->foreignId('article_id')->constrained('articles')->onDelete('cascade');
+		    $table->string('designation');
+            $table->double('pa');
             $table->double('remise');
             $table->integer('quantite');
             $table->double('remise_utilisateur');
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('puchase_order_product');
+        Schema::dropIfExists('article_commande');
     }
 };

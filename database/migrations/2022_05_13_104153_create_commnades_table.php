@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 return new class extends Migration
 {
@@ -14,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
+        Schema::create('commandes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code_commande');
             $table->string('code_fournisseur');
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_orders');
+        Schema::dropIfExists('commnades');
     }
 };

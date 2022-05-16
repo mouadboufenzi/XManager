@@ -9,9 +9,9 @@ class Article extends Model
 {
     use HasFactory;
 
-    public function purchase_orders()
+    public function commandes()
     {
-        return $this->belongsToMany(Purchase_order::class, 'purchase_order_product','article_id', 'purchase_order_id')
+        return $this->belongsToMany(Commande::class, 'article_commande', 'commande_id', 'article_id')
                     ->withPivot('remise', 'quantite', 'remise_utilisateur', 'prix_net', 'total')
                     ->withTimestamps();
     }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code');
-            $table->string('designation');
+            $table->string('designation')->unique();
             $table->string('status');
             $table->string('categorie');
             $table->double('pv');

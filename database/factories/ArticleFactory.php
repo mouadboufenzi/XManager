@@ -18,7 +18,7 @@ class ArticleFactory extends Factory
     {
         return [
             'code' => $this->faker->unique()->numerify('AT###'),
-            'designation' => $this->faker->word(),
+            'designation' => $this->faker->unique()->word(),
             'status' => $this->faker->randomElement(['Actif', 'Inactif']),
             'categorie' => $this->faker->randomElement(['Categorie 1', 'Categorie 2', 'Categorie 3']), // password
             'pv' => $this->faker->randomDigit(1000),

@@ -381,9 +381,17 @@ a {
 
 .datacmd {
     top: 1%;
-    width: 105%;
+    width: 80%;
     left: 2.5%;
     height: 550px;
+    background-color: white;
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
+}
+
+.datacmd2 {
+    margin-left: -45px;
+    width: 110%;
+    height: 300px;
     background-color: white;
     box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
 }
@@ -426,6 +434,11 @@ a {
     border-collapse: collapse;
     width: 100%;
   }
+
+#articles input,  #articles select{
+    margin-top: 10px;
+    font-size: 11px;
+}
   
   #articles td, #articles th {
     border: 1px solid #ddd;
@@ -481,8 +494,8 @@ a {
 }
 
 .yardcmd {
-    margin-left: 62px;
-    width: 90%;
+    margin-left: -120px;
+    width: 130%;
     height: 550px;
 }
 

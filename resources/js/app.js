@@ -46,3 +46,5 @@ document.querySelector('#clear_btn').addEventListener('click', function () {
 document.querySelector('#clear_btnC').addEventListener('click', function () {
     window.location.pathname = "/clients"
 })
+
+

@@ -35,7 +35,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($op as $item)
+                {{-- @foreach ($op as $item)
                     <tr>
                         @foreach ($articles as $article)
                             @if ($article->id == $item->article_id)
@@ -56,7 +56,7 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     </div>
@@ -79,10 +79,10 @@
 
                 <section id="content1">
                     <div class="myForm">
-                            <input id="store_route" type="hidden" id="store_route" value="{{route('article.store')}}">
+                            {{-- <input id="store_route" type="hidden" id="store_route" value="{{route('article.store')}}"> --}}
                             <div class="form-group">
                                 <span>Code fournisseurs : </span>
-                                <select id="categorie" name="code" class="form-select" aria-label="Default select example">
+                                <select id="categorie" name="code_fournisseur" class="form-select" aria-label="Default select example">
                                     <option selected>Code Fournisseur</option>
                                     @foreach ($fournisseurs as $fournisseur)
                                         <option value="{{$fournisseur->code}}">{{$fournisseur->code}}</option>
@@ -146,33 +146,50 @@
                             </button>
                     </div>
                 </section>
+            </form>
 
                 <section id="content3">
                     <div class="myForm">
-                            <input id="store_route" type="hidden" id="store_route" value="{{route('article.store')}}">
-                            <div class="form-group">
-                                <span>Article : </span>
-                                <select name="code_article" class="form-select" aria-label="Default select example" placeholder="text">
-                                    <option selected>Select</option>
-                                    @foreach ($articles as $article)
-                                        <option value="{{$article->code}}">{{$article->code}}</option>
-                                    @endforeach
-                                </select>
-
-                                <span>Designation : </span>
-                                <input  name="designation" type="text" class="form-control" placeholder="Designation">
-
-                                <span>P.A : </span>
-                                <input  name="pa" type="text" class="form-control" placeholder="P.A">
-
-                                <span>Quantite : </span>
-                                <input  name="quantite" type="text" class="form-control" placeholder="Quantite">
-
-                                <span>Remise : </span>
-                                <input  name="remise_article" type="text" class="form-control" placeholder="Remise">
-
-                                <span>Remise utilisateur : </span>
-                                <input  name="remise_utilisateur" type="text" class="form-control" placeholder="Remise utilisateur">
+                        <div class="dataField datacmd2">
+                            <table id="articles">
+                                <thead>
+                                    <tr>
+                                        <th id="id">DESIGNATION</th>
+                                        <th id="id">QUANTITE</th>
+                                        <th id="id">REMISE</th>
+                                        <th id="id">REMISE UTILISATEUR</th>
+                                        <th id="id">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="fix">
+                                            <input type="hidden" name="prevData" value="{{(isset($products)) ? $products : ''}}">
+                                            <td id="id" style="width: 95px">
+                                                <select id="designation" name="designation[]" class="form-select icmd" aria-label="Default select example" placeholder="text">
+                                                    <option selected>Designation</option>
+                                                    @foreach ($articles as $article)
+                                                        <option value="{{$article->id}}">{{$article->designation}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                                <td id="id"><input id="quantite" name="quantite[]" type="text" class="form-control icmd" placeholder="Quantite"></td>
+                                                <td id="id"><input id="remise_article" name="remise_article[]" type="text" class="form-control icmd" placeholder="Remise"></td>
+                                                <td id="id"><input id="remise_utilisateur" name="remise_utilisateur[]" type="text" class="form-control icmd" placeholder="Remise utilisateur"></td>
+                                                <td id="id"><button onclick="add()" id="sub" class="iconAct"><i class="fa-solid fa-circle-plus"></i></button></td>
+                                    </tr>
+                                        <tr>
+                                            <td id="id">AAAAAA</td>
+                                            <td id="id">AAAAAA</td>
+                                            <td id="id">AAAAAAA</td>
+                                            <td id="id">AAAAAAA</td>
+                                            <td id="id"><button class="iconAct" type="submit"><i class="fa-solid fa-circle-minus"></i></button></td>
+                                            
+                                        </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
                             </div>
                             <button onMouseOver="this.style.color='#7c73e6' ; this.style.background='white'; this.style.borderColor='#7c73e6'"
                             onMouseOut="this.style.color='white' ; this.style.background='#7c73e6'" 
@@ -201,10 +218,13 @@
                                 </div><br />
                             @endif
                     </div>
-            </form>
 
                 </section>
             </main>
         </div>
     </div>
+@endsection
+
+@section('jsFiles')
+    <script src="{{asset('../../js/app.js')}}"></script>
 @endsection
