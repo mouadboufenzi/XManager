@@ -24,6 +24,7 @@ return new class extends Migration
             $table->double('remise_utilisateur');
             $table->double('prix_net');
             $table->double('total');
+            $table->integer('quantite_reception');
             $table->timestamps();
             $table->softDeletes();
         });

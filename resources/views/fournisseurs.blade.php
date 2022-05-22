@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('title/addFile')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>XManager - Fournisseurs</title>
 @endsection
 
@@ -29,19 +30,19 @@
             <div class="form-group0">
                 <div class="sec form">
                     <span>Code : </span>
-                    <input name="code" type="text" class="form-control" placeholder="Code">
+                    <input id="code" name="code" type="text" class="form-control" placeholder="Code">
                 </div>
                 
     
                 <div class="sec0">
                     <span>Nom / Raison Social : </span>
-                    <input name="" type="text" class="form-control" placeholder="Nom / Raison Social :">
+                    <input id="nom" name="" type="text" class="form-control" placeholder="Nom / Raison Social :">
                 </div>
     
                 <div class="sec">
                     <span>Status : </span>
-                    <select name="status" class="form-select" aria-label="Default select example" placeholder="text">
-                        <option selected>Status</option>
+                    <select id="status" name="status" class="form-select" aria-label="Default select example" placeholder="text">
+                        <option value="" selected>Status</option>
                         <option value="Actif">Actif</option>
                         <option value="Inactif">Inactif</option>
                     </select>
@@ -62,7 +63,7 @@
                     <th id="id">STATUS</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="show">
                 @foreach ($fournisseurs as $fournisseur)
                     <tr>
                         <td id="id"><a href="/fournisseurs/{{$fournisseur->id}}">{{$loop->index + 1}}</a></td>
@@ -105,7 +106,7 @@
                     <select id="categorie" name="famille" class="form-select" aria-label="Default select example">
                         <option selected>Famille</option>
                         @foreach ($familles as $famille)
-                            <option value="{{$famille->famille}}" @if (isset($id) && $that_fournisseur->famille == "{{$famille->famille}}")
+                            <option value="{{$famille->famille}}" @if (isset($id) && $that_fournisseur->famille == $famille->famille)
                                 selected
                             @endif>{{$famille->famille}}</option>
                         @endforeach
@@ -117,7 +118,7 @@
                         <option value="Actif" @if (isset($id) && $that_fournisseur->status == "Actif")
                             selected
                         @endif>Actif</option>
-                        <option value="Inactif" @if (isset($id) && $that_fournisseur->famille == "Inactif")
+                        <option value="Inactif" @if (isset($id) && $that_fournisseur->status == "Inactif")
                             selected
                         @endif>Inactif</option>
                     </select>
@@ -300,4 +301,8 @@
             </form>
         </div>
     </section>
+@endsection
+
+@section('jsFiles')
+    <script src="/js/forn.js"></script>
 @endsection

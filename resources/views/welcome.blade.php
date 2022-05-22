@@ -29,6 +29,7 @@
                         <a href="/clients" class="nav_link @yield('clients')"> <i class='bx bxs-face bx-tada bx-flip-vertical nav_icon' ></i><span class="nav_name">Clients</span> </a> 
                         <a href="/fournisseurs" class="nav_link @yield('fournisseurs')"> <i class='bx bx-store-alt bx-tada bx-flip-vertical nav_icon' ></i> <span class="nav_name">Fournisseurs</span> </a>
                         <a href="/commandes" class="nav_link @yield('commande')"> <i class='bx bxs-cart bx-tada bx-flip-vertical nav_icon' ></i>  <span class="nav_name">Commandes</span> </a>  
+                        <a href="/receptions" class="nav_link @yield('reception')"> <i class='bx bx-notepad bx-tada nav_icon' ></i>  <span class="nav_name">Receptions</span> </a>
                     </div>
                 </div>
             </nav>

@@ -26,6 +26,30 @@ class fournisseurController extends Controller
         return view('fournisseurs', ['fournisseurs' => $fournisseurs, 'familles' => $familles]);
     }
 
+    public function filtreCode(Request $request, $id = null)
+    {
+        $fr = Fournisseur::where('code', 'like', request('fournisseur').'%')->get();
+        return response()->json([
+            'fournisseurs' => $fr
+        ]);
+    }
+
+    public function filtreNom(Request $request, $id = null)
+    {
+        $fr = Fournisseur::where('nom', 'like', request('nom').'%')->get();
+        return response()->json([
+            'fournisseurs' => $fr
+        ]);
+    }
+
+    public function filtreStatus(Request $request, $id = null)
+    {
+        $fr = Fournisseur::where('status', request('status'))->get();
+        return response()->json([
+            'fournisseurs' => $fr
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -123,7 +147,7 @@ class fournisseurController extends Controller
             $fournisseur->rc = $newData['rc'];
             $fournisseur->patente = $newData['patente'];
             $fournisseur->cin = $newData['cin'];
-            $fournisseur->mode_paiement = $newData['mode_paiment'];
+            $fournisseur->mode_paiement = $newData['mode_paiement'];
             $fournisseur->nom = $newData['nom'];
             $fournisseur->fonction = $newData['fonction'];
             $fournisseur->email = $newData['email'];

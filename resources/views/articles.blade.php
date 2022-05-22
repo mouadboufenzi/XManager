@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('title/addFile')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>XManager - Articles</title>
 @endsection
 
@@ -25,28 +26,27 @@
     <div class="myFilter">
         <form class="mine" action="" method="post">
             @csrf
-            @method('post')
             <div class="form-group0">
                 <div class="sec">
                     <span>Article : </span>
-                    <input name="code" type="text" class="form-control" placeholder="Article">
+                    <input id="code" name="code" type="text" class="form-control" placeholder="Article">
                 </div>
                 
     
                 <div class="sec">
                     <span>Categorie : </span>
-                    <select name="categorie" class="form-select" aria-label="Default select example">
-                        <option selected>Categorie</option>
-                        <option value="Categorie 1">Categorie 1</option>
-                        <option value="Categorie 2">Categorie 2</option>
-                        <option value="Categorie 3">Categorie 3</option>
+                    <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
+                        <option value="" selected>Categorie</option>
+                        @foreach ($categories as $categorie)
+                            <option value="{{$categorie->categorie}}">{{$categorie->categorie}}</option>
+                        @endforeach
                     </select>
                 </div>
     
                 <div class="sec">
                     <span>Status : </span>
-                    <select name="status" class="form-select" aria-label="Default select example" placeholder="text">
-                        <option selected>Status</option>
+                    <select id="status" name="status" class="form-select" aria-label="Default select example" placeholder="text">
+                        <option value="" selected>Status</option>
                         <option value="Actif">Actif</option>
                         <option value="Inactif">Inactif</option>
                     </select>
@@ -54,7 +54,7 @@
             </div>
             <div class="form-group1">
                 <span>Designation : </span>
-                <input name="designation" type="text" class="form-control" placeholder="Designation">
+                <input id="des" name="designation" type="text" class="form-control" placeholder="Designation">
             </div>
         </form>
     </div>
@@ -73,7 +73,7 @@
                     <th id="id">PRIX DE VENTE</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="show">
                 @foreach ($articles as $article)
                     <tr>
                         <td id="id"><a href="/articles/{{$article->id}}">{{$loop->index + 1}}</a></td>
@@ -107,9 +107,9 @@
                 <div class="form-group">
                     <span>Categorie : </span>
                     <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
-                        <option selected>Categorie</option>
+                        <option>Categorie</option>
                         @foreach ($categories as $categorie)
-                            <option value="{{$categorie->categorie}}" @if (isset($id) && $that_article->categorie == "{{$categorie->categorie}}")
+                            <option value="{{$categorie->categorie}}" @if (isset($id) && $that_article->categorie == $categorie->categorie)
                                 selected
                             @endif>{{$categorie->categorie}}</option>
                         @endforeach
@@ -196,4 +196,8 @@
             </form>
         </div>
     </section>
+@endsection
+
+@section('jsFiles')
+    <script src="/js/art.js"></script>
 @endsection

@@ -30,6 +30,30 @@ class clientController extends Controller
         return view('clients', ['clients' => $clients, 'familles' => $familles, 'categories' => $categories, 'agents' => $agents]);
     }
 
+    public function filtreCode(Request $request, $id = null)
+    {
+        $c = Client::where('code', 'like', request('client').'%')->get();
+        return response()->json([
+            'clients' => $c
+        ]);
+    }
+
+    public function filtreStatus(Request $request, $id = null)
+    {
+        $c = Client::where('status', request('status'))->get();
+        return response()->json([
+            'clients' => $c
+        ]);
+    }
+
+    public function filtreNom(Request $request, $id = null)
+    {
+        $c = Client::where('nom', 'like', request('nom').'%')->get();
+        return response()->json([
+            'clients' => $c
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

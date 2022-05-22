@@ -15,4 +15,8 @@ class Fournisseur extends Model
     {
         return $this->hasMany(Purchase_order::class);
     }
+
+    public function commandes() {
+        return $this->hasMany(Commande::class);
+    }
 }

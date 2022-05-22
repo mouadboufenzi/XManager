@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('adresse');
             $table->double('remise');
+            $table->double('total');
+            $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
         });

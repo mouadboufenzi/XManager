@@ -11,10 +11,24 @@ class Commande extends Model
     use SoftDeletes;
     use HasFactory;
 
+    public function fournisseurs() {
+        return $this->belongsTo(Fournisseur::class);
+    }
+
+    public function vehicules() {
+        return $this->belongsTo(Vehicule::class, 'id_vehicule');
+    }
+
+    public function receptions()
+    {
+        return $this->belongsTo(Reception::class, 'commande_id');
+    }
+
     public function articles()
     {
         return $this->belongsToMany(Article::class, 'article_commande', 'commande_id', 'article_id')
-                    ->withPivot('remise', 'quantite', 'remise_utilisateur', 'prix_net', 'total')
+                    ->withPivot('id', 'remise', 'quantite', 'remise_utilisateur', 'prix_net', 'total', 'quantite_reception')
                     ->withTimestamps();
     }
+
 }

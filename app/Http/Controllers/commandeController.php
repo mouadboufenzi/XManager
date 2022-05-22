@@ -26,13 +26,36 @@ class commandeController extends Controller
      */
     public function index($id = null)
     {
-        $fournisseurs = Fournisseur::all();
+        $fournisseurs = Fournisseur::where('status', 'Actif')->get();
         $articles = Article::all();
+        $cmds = Commande::all();
+
         if ($id != null) {
-            return view('commandes', ['articles' => $articles, 'fournisseurs' => $fournisseurs, 'id' => $id]);
+            $cmd = Commande::findOrFail($id);
+            $cv = Vehicule::findOrFail($cmd->id_vehicule);
+            // dd($cmd->articles->get(0)->designation);
+            return view('commandes', ['vh' => $cv, 'data' => $cmd, 'cmds' => $cmds, 'articles' => $articles, 'fournisseurs' => $fournisseurs, 'id' => $id]);
         }
-        return view('commandes', ['articles' => $articles, 'fournisseurs' => $fournisseurs]);
+        return view('commandes', ['cmds' => $cmds, 'articles' => $articles, 'fournisseurs' => $fournisseurs]);
     }
+
+    public function getRemise(Request $request, $id = null)
+    {
+        $fr = Fournisseur::where('code', request('code'))->get();
+        return response()->json([
+            'fournisseur' => $fr,
+        ]);
+    }
+
+    public function updatePivot(Request $request, $id = null)
+    {
+        // $cmd = Commande::findOrFail(request('id_commande'));
+        // // $cmd->article();
+        // return response()->json([
+        //     "test1" => $cmd->articles()->sync([request('id_pivot') => ['quantite_reception' => request('quantite_reception')]])
+        // ]);
+    }
+
 
 
 
@@ -44,24 +67,6 @@ class commandeController extends Controller
     public function create(Request $request) {
         // $request->validated();
         // dd($request['prevData']);
-        
-        for ($i = 0; $i < $request['designation']; $i++) {
-            $that_art = Article::where(['id' => $request['designation'][$i]])->get();
-            if (isset($that_art[0])) {
-                $products[$i] = [
-                    "id" => $that_art[0]->id,
-                    "designation" => $that_art[0]->designation,
-                    "pa" => $that_art[0]->pa,
-                    "remise" => $request['remise_article'][$i],
-                    "quantite" => $request['quantite'][$i],
-                    "remise_utilisateur" => $request['remise_utilisateur'][$i],
-                    "prix_net" => ($that_art[0]->pa - ($that_art[0]->pa * ($request['remise_article'][$i] + $request['remise_utilisateur'][$i]))),
-                    "total" => ($request['quantite'][$i] * ($that_art[0]->pa - ($that_art[0]->pa * ($request['remise_article'][$i] + $request['remise_utilisateur'][$i]))))
-                ];
-            }
-        }
-
-        return redirect('/commandes');
         // $products = [
         //     "id" => $that_art[0]->id,
         //     "designation" => $that_art[0]->designation,
@@ -85,12 +90,10 @@ class commandeController extends Controller
     {
         $request->validated();
 
+        // dd(request('d'));
 
 
-        $fr = Fournisseur::where('code', $request['code_fournisseur'])->get();
-        // $art = Article::where('code', request('code_article'))->get();
-        // $order_product = new Purchase_order_product();
-        // $order = new Purchase_order();
+        $fr = Fournisseur::where('code', $request['code_fournisseur'])->first();
         $cmd = new Commande();
         $vehicule = new Vehicule();
         $c = Commande::count() + 1;
@@ -109,47 +112,52 @@ class commandeController extends Controller
 
         $cmd->code_commande = "CD200".date('y').date('m')."-".$f;
         $cmd->code_fournisseur = request('code_fournisseur');
-        $cmd->email = $fr[0]->email;
-        $cmd->portable = $fr[0]->portable;
-        $cmd->adresse = $fr[0]->adresse;
-
-        // $order->code_commande = "CD200".date('y').date('m')."-".$f;
-        // $order->code_fournisseur = request('code');
-        // $order->date = Carbon::now();
-        // $order->email = $fr[0]->email;
-        // $order->portable = $fr[0]->portable;
-        // $order->adresse = $fr[0]->adresse;
+        $cmd->email = $fr->email;
+        $cmd->portable = $fr->portable;
+        $cmd->adresse = $fr->adresse;
         
-        if (request('remise') == $fr[0]->remise_1 || request('remise') == $fr[0]->remise_2 || 
-        request('remise') == $fr[0]->remise_3) {
+        if (request('remise') == $fr->remise_1 || request('remise') == $fr->remise_2 || 
+        request('remise') == $fr->remise_3) {
             $cmd->remise = $request['remise'];
             if (!empty(request('matricule')) && !empty(request('mec'))) {
                 $vehicule->matricule = request('matricule');
                 $vehicule->mec = request('mec');
-                $vehicule->save();
-                $cmd->id_vehicule = $vehicule->id;
             }
-            // $cmd->id_vehicule = null;
-            $cmd->id_fournisseur = $fr[0]->id;
+            $cmd->id_fournisseur = $fr->id;
             $cmd->date = now();
-            $cmd->save();
-            return redirect('/commandes');
-        //     $order_product->purchase_order_id = $order->id;
-        //     $order_product->article_id = $art[0]->id;
-        //     if ($art[0]->designation == request('designation') && $art[0]->pa == request('pa') && 
-        //         $order->remise == request('remise_article')) {
-        //         $order_product->designation = request('designation');
-        //         $order_product->quantite = request('quantite');
-        //         $order_product->pa = request('pa');
-        //         $order_product->remise = request('remise_article');
-        //         $order_product->remise_utilisateur = request('remise_utilisateur');
-        //         $order_product->prix_net = ((request('pa') * (request('remise_article') + request('remise_utilisateur'))) / 100) 
-        //         + ((request('remise_article') + request('remise_utilisateur')));
-        //         $order_product->total = $order_product->prix_net * request('quantite');
 
-        //         $order_product->save();
-        //         return redirect('/commandes');
-        //     }
+            $list = [];
+
+            if (isset($request['d'])) { 
+                if (count(request('d')) != 0) {
+                    for ($i = 0; $i < count(request('d')); $i++) {
+                        $id_article = Article::where('designation', request('d')[$i])->first();
+                        $list[] = [
+                            "article_id" => $id_article->id,
+                            "designation" => request('d')[$i],
+                            "pa" => $id_article->pa,
+                            "remise" => request('ra')[$i],
+                            "quantite" => request('q')[$i],
+                            "remise_utilisateur" => request('ru')[$i],
+                            "prix_net" => 0,
+                            "total" => 0,
+                            "quantite_reception" => 0
+                        ];
+                    }
+                    $vehicule->save();
+                    $cmd->id_vehicule = $vehicule->id;
+                    $cmd->total = 0;
+                    $cmd->status = 0;
+                    $cmd->save();
+    
+                    $cmd->articles()->sync($list);
+                    return redirect('/commandes');
+                } else {
+                    return redirect('/commandes');
+                }
+            } else {
+                return redirect('/commandes');
+            }
         } else {
             return redirect('/commandes');
         }
@@ -186,7 +194,62 @@ class commandeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $data = $request->all();
+        $cmd = Commande::findOrFail($id);
+        $v = Vehicule::findOrFail($cmd->id_vehicule);
+        $fr = Fournisseur::where(['code' => $data['code_fournisseur'], 'status' => 'Actif'])->first();
+
+        $cmd->code_fournisseur = $data['code_fournisseur'];
+        $cmd->email = $fr->email;
+        $cmd->portable = $fr->portable;
+        $cmd->adresse = $fr->adresse;
+
+        if ($data['remise'] == $fr->remise_1 || $data['remise'] == $fr->remise_2 || 
+        $data['remise'] == $fr->remise_3) {
+            $cmd->remise = $data['remise'];
+            if (!empty($data['matricule']) && !empty($data['mec'])) {
+                $v->matricule = $data['matricule'];
+                $v->mec = $data['mec'];
+            }
+            $cmd->id_fournisseur = $fr->id;
+            $cmd->date = now();
+
+            $list = [];
+
+            if (isset($data['d'])) {
+                if (count($data['d']) != 0) {
+                    for ($i = 0; $i < count($data['d']); $i++) {
+                        $id_article = Article::where('designation', $data['d'][$i])->first();
+                        $list[] = [
+                            "article_id" => $id_article->id,
+                            "designation" => $data['d'][$i],
+                            "pa" => $id_article->pa,
+                            "remise" => $data['remise'][$i],
+                            "quantite" => $data['q'][$i],
+                            "remise_utilisateur" => $data['ru'][$i],
+                            "prix_net" => 0,
+                            "total" => 0,
+                            "quantite_reception" => 0
+                        ];
+                    }
+                    $v->save();
+                    $cmd->id_vehicule = $v->id;
+                    $cmd->total = 0;
+                    $cmd->status = 0;
+                    $cmd->save();
+    
+                    $cmd->articles()->sync($list);
+                    // dd($cmd->articles()->sync($list));
+                    return redirect('/commandes');
+                } else {
+                    return redirect('/commandes');
+                }
+            } else {
+                return redirect()->route('commande.update', ['id' => $id]);
+            }
+        } else {
+            return redirect('/commandes');
+        }
     }
 
     /**
@@ -195,13 +258,13 @@ class commandeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        // $pp = Purchase_order_product::find($request->input('delete'));
-        // $po = Purchase_order::find($pp->purchase_order_id);
-        // $v = Vehicule::find($po->id_vehicule);
-
-        // $v->delete(); $po->delete(); $pp->delete();
-        // return redirect('/commandes');
+        $cmd = Commande::findOrFail($id);
+        $v = Vehicule::findOrFail($cmd->id_vehicule);
+        $cmd->articles()->sync([]);
+        $cmd->delete();
+        $v->delete();
+        return redirect('/commandes');
     }
 }

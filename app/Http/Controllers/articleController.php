@@ -25,6 +25,38 @@ class articleController extends Controller
         return view('articles', ['articles' => $articles, 'categories' => $categories]);
     }
 
+    public function filtreCode(Request $request, $id = null)
+    {
+        $arts = Article::where('code', 'like', request('article').'%')->get();
+        return response()->json([
+            'arts' => $arts
+        ]);
+    }
+
+    public function filtreDesignation(Request $request, $id = null)
+    {
+        $arts = Article::where('designation', 'like', request('des').'%')->get();
+        return response()->json([
+            'arts' => $arts
+        ]);
+    }
+
+    public function filtreCategorie(Request $request, $id = null)
+    {
+        $arts = Article::where('categorie', request('categorie'))->get();
+        return response()->json([
+            'arts' => $arts
+        ]);
+    }
+
+    public function filtreStatus(Request $request, $id = null)
+    {
+        $arts = Article::where('status', request('status'))->get();
+        return response()->json([
+            'arts' => $arts
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

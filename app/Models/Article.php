@@ -11,8 +11,14 @@ class Article extends Model
 
     public function commandes()
     {
-        return $this->belongsToMany(Commande::class, 'article_commande', 'commande_id', 'article_id')
-                    ->withPivot('remise', 'quantite', 'remise_utilisateur', 'prix_net', 'total')
+        return $this->belongsToMany(Commande::class, 'article_commande',  'article_id', 'commande_id')
+                    ->withPivot('id', 'remise', 'quantite', 'remise_utilisateur', 'prix_net', 'total', 'quantite_reception')
+                    ->withTimestamps();
+    }
+
+    public function receptions()
+    {
+        return $this->belongsToMany(Reception::class, 'article_reception')
                     ->withTimestamps();
     }
 }

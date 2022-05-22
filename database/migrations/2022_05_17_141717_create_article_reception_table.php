@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicules', function (Blueprint $table) {
+        Schema::create('article_reception', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('matricule');
-            $table->string('mec');
+            $table->foreignId('reception_id')->constrained('receptions')->onDelete('cascade');
+            $table->foreignId('article_id')->constrained('articles')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicules');
+        Schema::dropIfExists('article_reception');
     }
 };

@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('title/addFile')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="/style.css">
     <title>XManager - Clients</title>
 @endsection
@@ -30,18 +31,18 @@
             <div class="form-group0">
                 <div class="sec">
                     <span>Code : </span>
-                    <input name="code" type="text" class="form-control" placeholder="Code">
+                    <input id="code" name="code" type="text" class="form-control" placeholder="Code">
                 </div>
 
 
                 <div class="sec0">
                     <span>Nom / Raison Sociale : </span>
-                    <input name="nom" type="text" class="form-control" placeholder="Nom / Raison Sociale">
+                    <input id="nom" name="nom" type="text" class="form-control" placeholder="Nom / Raison Sociale">
                 </div>
 
                 <div class="sec uno">
                     <span>Status : </span>
-                    <select name="status" class="form-select" aria-label="Default select example" placeholder="text">
+                    <select id="status" name="status" class="form-select" aria-label="Default select example" placeholder="text">
                         <option selected>Status</option>
                         <option value="Actif">Actif</option>
                         <option value="Inactif">Inactif</option>
@@ -63,7 +64,7 @@
                     <th id="id">STATUS</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="show">
                 @foreach ($clients as $client)
                     <tr>
                         <td id="id"><a href="/clients/{{$client->id}}">{{$loop->index + 1}}</a></td>
@@ -102,7 +103,7 @@
                     <select id="categorie" name="famille" class="form-select" aria-label="Default select example">
                         <option selected>Famille</option>
                         @foreach ($familles as $famille)
-                            <option value="{{$famille->famille}}" @if (isset($id) && $that_client->famille == "{{$famille->famille}}")
+                            <option value="{{$famille->famille}}" @if (isset($id) && $that_client->famille == $famille->famille)
                                 selected
                             @endif>{{$famille->famille}}</option>
                         @endforeach
@@ -112,7 +113,7 @@
                     <select id="categorie" name="categorie" class="form-select" aria-label="Default select example">
                         <option selected>Categorie</option>
                         @foreach ($categories as $categorie)
-                        <option value="{{$categorie->categorie}}" @if (isset($id) && $that_client->categorie == "{{$categorie->categorie}}")
+                        <option value="{{$categorie->categorie}}" @if (isset($id) && $that_client->categorie == $categorie->categorie)
                                 selected
                             @endif>{{$categorie->categorie}}</option>
                         @endforeach
@@ -122,7 +123,7 @@
                     <select id="categorie" name="agent_commercial" class="form-select" aria-label="Default select example">
                         <option selected>Agent Commercial</option>
                         @foreach ($agents as $agent)
-                            <option value="{{$agent->nom}}" @if (isset($id) && $that_client->agent_commercial == "{{$agent->nom}}")
+                            <option value="{{$agent->nom}}" @if (isset($id) && $that_client->agent_commercial == $agent->nom)
                                 selected
                             @endif>{{$agent->nom}}</option>
                         @endforeach
@@ -301,4 +302,8 @@
             </form>
         </div>
     </section>
+@endsection
+
+@section('jsFiles')
+    <script src="/js/cle.js"></script>
 @endsection
