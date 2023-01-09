@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReceptionValidationRequest;
 use App\Models\Article;
 use App\Models\Commande;
+use App\Models\Depot;
 use App\Models\Reception;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Symfony\Component\Console\Input\Input;
 
 class receptionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,13 +24,10 @@ class receptionController extends Controller
      */
     public function index($id = null)
     {
+        $dep = Depot::all();
         $cmd = Commande::where('status', '<>', 2)->get();
         $rece = Reception::all();
-        $arr = [];
-        foreach ($rece as $rec) {
-            array_push($arr, Reception::find($rec->id)->commandes);
-        }
-        return view('reception', ['data' => $arr ,'receptions' => $rece, 'cmds' => $cmd]);
+        return view('reception', ['depots' => $dep,'receptions' => $rece, 'cmds' => $cmd]);
     }
 
     public function receptionCommande(Request $request)
@@ -53,8 +57,9 @@ class receptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReceptionValidationRequest $request)
     {
+        $request->validated();
         $cmd = Commande::findOrFail(request('code_commande'));
         $rece = new Reception();
         $etat = 0;
@@ -90,7 +95,45 @@ class receptionController extends Controller
                 $rece->code = "RECE200".date('y').date('m')."-".$f;
                 $rece->commande_id = request('code_commande');
                 $rece->date = now();
+                $rece->status = 0;
+                $rece->depot_id = request('depot');
                 $rece->save();
+                $articles = [];
+                foreach ($rece->commandes as $cmds) {
+                    foreach ($cmds->articles as $cmd) {
+                        $articles[] = [
+                            'id_article' => $cmd->id,
+                            'quantite' => $cmd->pivot->quantite
+                        ];
+                    }
+                }
+                $dep = Depot::find($rece->depot_id);
+                $stocks = Stock::where('id_depot', $dep->id)->get();
+                foreach ($stocks as $stock) {
+                    $i = 0;
+                    $ss = Stock::findOrFail($stock->id);
+                    foreach ($ss->articles as $stock_article) {
+                        foreach ($articles as $article) {
+                            if ($article['id_article'] == $stock_article->id) {
+                                $exist = [
+                                    $stock_article->pivot->id => [
+                                        'stock_id' => $stock_article->pivot->stock_id,
+                                        'article_id' => $stock_article->pivot->article_id,
+                                        'quantite' => $stock_article->pivot->quantite + $article['quantite'],
+                                        'date' => now(),
+                                        'created_at' => $stock_article->pivot->created_at,
+                                        'updated_at' => $stock_article->pivot->updated_at,
+                                    ]
+                                ];
+                                // $new_quantite = $stock_article->pivot->quantite + ;
+                                // $attributes = ['quantite' => $new_quantite];
+                                Stock::findOrFail($stocks[$i]->id)->articles()->syncWithoutDetaching($exist);
+                            }
+                        }
+                    }
+                    $i++;
+                }
+
                 $r = Reception::findOrFail($rece->id);
                 $r->articles()->sync($ids_Articles);
             } else {

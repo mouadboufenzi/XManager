@@ -16,10 +16,14 @@ code.addEventListener('change', function () {
             dataType: "json",
             success: function (response) {
                 console.log()
-                $.each(response.fournisseur, function (key, item) { 
+                $.each(response.fournisseur, function (key, item) {
+                    data = ""
+                    data = `<option value="${item.remise_1}">${item.remise_1}</option>`
+                    if (item.remise_2 != null) data += `<option value="${item.remise_2}">${item.remise_2}</option>`
+                    if (item.remise_3 != null) data += `<option value="${item.remise_3}">${item.remise_3}</option>`
                     rm.value = item.remise_1
                 });
-                $('#remise').html(data)
+                $('#rm').html(data)
             }
         });
     }

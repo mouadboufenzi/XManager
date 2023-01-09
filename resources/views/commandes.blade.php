@@ -31,7 +31,7 @@
                     <th id="id">Fournisseur</th>
                     <th id="id">Vehicule</th>
                     <th id="id">Total</th>
-                    <th id="id">Status</th>
+                    <th id="id">Reception status</th>
                     <th id="id">Action</th>
                 </tr>
             </thead>
@@ -42,16 +42,19 @@
                         @method('delete')
                         <tr>
                             <td id="id">
-                                <a href="/commandes/{{$cmd->id}}">{{$cmd->code_commande}}</a>
+                                <a @if ($cmd->status != 2)
+                                    href="/commandes/{{$cmd->id}}"
+                                @endif>{{$cmd->code_commande}}
+                                </a>
                             </td>
                             <td id="id">
                                 {{$cmd->code_fournisseur}}
                             </td>
                             <td id="id">
-                                {{$cmd->id_vehicule}}
+                                {{$cmd->vehicules->matricule}}
                             </td>
                             <td id="id">
-                                {{$cmd->total}}
+                                {{$cmd->total}} Dhs
                             </td>
                             <td id="id">
                                 {{$cmd->status}}
@@ -100,7 +103,19 @@
                                 </select>
 
                                 <span>Remise : </span>
-                                <input id="rm" name="remise" type="text" class="form-control" value="{{(isset($id)) ? $data->remise : old('remise')}}" placeholder="Remise">
+                                <select id="rm" name="remise" class="form-select" aria-label="Default select example">
+                                    @if (isset($id))
+                                        <option value="{{$fr->remise_1}}" @if ($cmd->remise == $fr->remise_1)
+                                            selected
+                                        @endif>{{$fr->remise_1}}</option>
+                                        <option value="{{$fr->remise_2}}" @if ($cmd->remise == $fr->remise_2)
+                                            selected
+                                        @endif>{{$fr->remise_2}}</option>
+                                        <option value="{{$fr->remise_3}}" @if ($cmd->remise == $fr->remise_3)
+                                            selected
+                                        @endif>{{$fr->remise_3}}</option>
+                                    @endif
+                                </select>
                             </div>
                             <button onMouseOver="this.style.color='#7c73e6' ; this.style.background='white'; this.style.borderColor='#7c73e6'"
                             onMouseOut="this.style.color='white' ; this.style.background='#7c73e6'" 
@@ -165,7 +180,7 @@
                                     <tr id="end" class="fix">
                                         <td id="id" style="width: 119px">
                                             <select id="designation" name="designation" class="form-select icmd" aria-label="Default select example" placeholder="text">
-                                                <option selected>Designation</option>
+                                                <option value="" selected>Designation</option>
                                                 @foreach ($articles as $article)
                                                     <option value="{{$article->designation}}">{{$article->designation}}</option>
                                                 @endforeach

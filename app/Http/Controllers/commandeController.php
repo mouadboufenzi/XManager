@@ -19,6 +19,10 @@ use PHPUnit\Util\Json;
 
 class commandeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,14 +31,15 @@ class commandeController extends Controller
     public function index($id = null)
     {
         $fournisseurs = Fournisseur::where('status', 'Actif')->get();
-        $articles = Article::all();
+        $articles = Article::where('status', 'Actif')->get();
         $cmds = Commande::all();
 
         if ($id != null) {
             $cmd = Commande::findOrFail($id);
             $cv = Vehicule::findOrFail($cmd->id_vehicule);
+            $fr = Fournisseur::findOrFail($cmd->id_fournisseur);
             // dd($cmd->articles->get(0)->designation);
-            return view('commandes', ['vh' => $cv, 'data' => $cmd, 'cmds' => $cmds, 'articles' => $articles, 'fournisseurs' => $fournisseurs, 'id' => $id]);
+            return view('commandes', ['fr' => $fr, 'vh' => $cv, 'data' => $cmd, 'cmds' => $cmds, 'articles' => $articles, 'fournisseurs' => $fournisseurs, 'id' => $id]);
         }
         return view('commandes', ['cmds' => $cmds, 'articles' => $articles, 'fournisseurs' => $fournisseurs]);
     }
@@ -127,11 +132,14 @@ class commandeController extends Controller
             $cmd->date = now();
 
             $list = [];
+            $cmd_total = 0;
 
             if (isset($request['d'])) { 
                 if (count(request('d')) != 0) {
                     for ($i = 0; $i < count(request('d')); $i++) {
                         $id_article = Article::where('designation', request('d')[$i])->first();
+                        $prix_net = ($id_article->pa - $id_article->pa * (request('ra')[$i] - request('ru')[$i]));
+                        $total = request('q')[$i] * $prix_net;
                         $list[] = [
                             "article_id" => $id_article->id,
                             "designation" => request('d')[$i],
@@ -139,14 +147,15 @@ class commandeController extends Controller
                             "remise" => request('ra')[$i],
                             "quantite" => request('q')[$i],
                             "remise_utilisateur" => request('ru')[$i],
-                            "prix_net" => 0,
-                            "total" => 0,
+                            "prix_net" => $prix_net,
+                            "total" => $total,
                             "quantite_reception" => 0
                         ];
+                        $cmd_total += $total;
                     }
                     $vehicule->save();
                     $cmd->id_vehicule = $vehicule->id;
-                    $cmd->total = 0;
+                    $cmd->total = $cmd_total;
                     $cmd->status = 0;
                     $cmd->save();
     
@@ -215,26 +224,30 @@ class commandeController extends Controller
             $cmd->date = now();
 
             $list = [];
+            $cmd_total = 0;
 
             if (isset($data['d'])) {
                 if (count($data['d']) != 0) {
                     for ($i = 0; $i < count($data['d']); $i++) {
                         $id_article = Article::where('designation', $data['d'][$i])->first();
+                        $prix_net = ($id_article->pa - $id_article->pa * ($data['remise'] - $data['ru'][$i]));
+                        $total = $data['q'][$i] * $prix_net;
                         $list[] = [
                             "article_id" => $id_article->id,
                             "designation" => $data['d'][$i],
                             "pa" => $id_article->pa,
-                            "remise" => $data['remise'][$i],
+                            "remise" => $data['remise'],
                             "quantite" => $data['q'][$i],
                             "remise_utilisateur" => $data['ru'][$i],
-                            "prix_net" => 0,
-                            "total" => 0,
+                            "prix_net" => $prix_net,
+                            "total" => $total,
                             "quantite_reception" => 0
                         ];
+                        $cmd_total += $total;
                     }
                     $v->save();
                     $cmd->id_vehicule = $v->id;
-                    $cmd->total = 0;
+                    $cmd->total = $cmd_total;
                     $cmd->status = 0;
                     $cmd->save();
     

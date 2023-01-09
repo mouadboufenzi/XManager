@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{asset("../../css/app.css")}}">
+    <link rel="stylesheet" href="/css/back.css">
     <title>XManager - Home</title>
     <script src="https://kit.fontawesome.com/39383a79c4.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -30,6 +30,12 @@
                         <a href="/fournisseurs" class="nav_link @yield('fournisseurs')"> <i class='bx bx-store-alt bx-tada bx-flip-vertical nav_icon' ></i> <span class="nav_name">Fournisseurs</span> </a>
                         <a href="/commandes" class="nav_link @yield('commande')"> <i class='bx bxs-cart bx-tada bx-flip-vertical nav_icon' ></i>  <span class="nav_name">Commandes</span> </a>  
                         <a href="/receptions" class="nav_link @yield('reception')"> <i class='bx bx-notepad bx-tada nav_icon' ></i>  <span class="nav_name">Receptions</span> </a>
+                        <a href="/facture" class="nav_link @yield('facture')"> <i class='bx bx-file-blank bx-tada bx-flip-horizontal nav_icon' ></i>  <span class="nav_name">Factures</span> </a>
+                        <a href="/stock" class="nav_link @yield('stock')"> <i class='bx bx-layer bx-tada nav_icon' ></i>  <span class="nav_name">Stock</span> </a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav_link"> <i class='bx bx-log-out-circle nav_icon'></i>  <span class="nav_name">Deconnexion</span> </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </nav>
@@ -38,8 +44,121 @@
         <div class="king">
             <div class="shape">
                 <div class="navDiv">
+                    <div class="navtous">
+                        <div class="navtous1">
+                            <span class="txt">Welcome</span>
+                        </div>
+                        <div style="margin-left: 25px;" class="navtous2">
+                            <i class="f1 fa-solid fa-house"></i>
+                            <span class="f2">|</span>
+                            <p class="f3">Welcome</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="prince">
+                <div class="p">
+                    <div class="welBlocks">
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-package blockIcon'></i>
+                                </div>
+                            </div>
+                            <div class="blockInfo">
+                                <span style="font-size: 30px;">{{$arts}}</span> <br>
+                                <span>Articles</span>
+                            </div>
+                        </div>
+
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-face blockIcon'></i>
+                                </div>
+                            </div>
+                            <div class="blockInfo">
+                                <span style="font-size: 30px;">{{$cls}}</span> <br>
+                                <span>Clients</span>
+                            </div>
+                        </div>
+
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-store blockIcon'></i>
+                                </div>
+                            </div>
+                            <div class="blockInfo">
+                                <span style="font-size: 30px;">{{$frs}}</span> <br>
+                                <span>Fournisseurs</span>
+                            </div>
+                        </div>
+
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-cart blockIcon'></i>
+                                </div>
+                            </div>
+                            <div class="blockInfo">
+                                <span style="font-size: 30px;">{{$cmds}}</span> <br>
+                                <span>Commandes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="welBlocks">
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-cart blockIcon'></i>
+                                </div>
+                            </div>
+                            <div style="padding-top: 18px;" class="blockInfo">
+                                <span style="font-size: 30px;">{{$_cmds}}</span> <br>
+                                <span>Commandes non réceptionnée</span>
+                            </div>
+                        </div>
+
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-notepad blockIcon'></i>
+                                </div>
+                            </div>
+                            <div class="blockInfo">
+                                <span style="font-size: 30px;">{{$recs}}</span> <br>
+                                <span>Réceptions</span>
+                            </div>
+                        </div>
+
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-file-blank blockIcon'></i>
+                                </div>
+                            </div>
+                            <div class="blockInfo">
+                                <span style="font-size: 30px;">{{$facs}}</span> <br>
+                                <span>Factures</span>
+                            </div>
+                        </div>
+
+                        <div class="welBlock">
+                            <div class="blockIcons">
+                                <div class="weliconDiv">
+                                    <i class='bx bxs-layer blockIcon'></i>
+                                </div>
+                            </div>
+                            <div class="blockInfo">
+                                <span style="font-size: 30px;">{{$sts}}</span> <br>
+                                <span>Stocks</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="welBlocks">
+                        
+                    </div>
                 </div>
             </div>
         </div>

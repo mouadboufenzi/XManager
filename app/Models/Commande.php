@@ -16,7 +16,7 @@ class Commande extends Model
     }
 
     public function vehicules() {
-        return $this->belongsTo(Vehicule::class, 'id_vehicule');
+        return $this->belongsTo(Vehicule::class, 'id');
     }
 
     public function receptions()

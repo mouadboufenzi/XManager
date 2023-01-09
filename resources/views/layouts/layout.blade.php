@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{asset("../../css/app.css")}}">
+    <link rel="stylesheet" href="/css/back.css">
     <script src="https://kit.fontawesome.com/39383a79c4.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
@@ -27,12 +27,18 @@
                     </a>
                     <div class="nav_list"> 
                         {{--active--}}
-                        <a href="/" class="nav_link"> <i class='bx bxs-home-alt-2 bx-tada bx-flip-vertical nav_icon' ></i> <span class="nav_name">Home</span> </a> 
+                        <a href="/welcome" class="nav_link"> <i class='bx bxs-home-alt-2 bx-tada bx-flip-vertical nav_icon' ></i> <span class="nav_name">Home</span> </a> 
                         <a href="/articles" class="nav_link @yield('articles')"> <i class='bx bxs-package bx-tada bx-flip-vertical nav_icon'></i> <span class="nav_name">Articles</span> </a> 
                         <a href="/clients" class="nav_link @yield('clients')"> <i class='bx bxs-face bx-tada bx-flip-vertical nav_icon' ></i><span class="nav_name">Clients</span> </a> 
                         <a href="/fournisseurs" class="nav_link @yield('fournisseurs')"> <i class='bx bx-store-alt bx-tada bx-flip-vertical nav_icon' ></i> <span class="nav_name">Fournisseurs</span> </a>
                         <a href="/commandes" class="nav_link @yield('commande')"> <i class='bx bxs-cart bx-tada bx-flip-vertical nav_icon' ></i>  <span class="nav_name">Commandes</span> </a>
                         <a href="/receptions" class="nav_link @yield('reception')"> <i class='bx bx-notepad bx-tada nav_icon' ></i>  <span class="nav_name">Receptions</span> </a>
+                        <a href="/facture" class="nav_link @yield('facture')"> <i class='bx bx-file-blank bx-tada bx-flip-horizontal nav_icon' ></i>  <span class="nav_name">Factures</span> </a>
+                        <a href="/stock" class="nav_link @yield('stock')"> <i class='bx bx-layer bx-tada nav_icon' ></i>  <span class="nav_name">Stock</span> </a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav_link"> <i class='bx bx-log-out-circle nav_icon'></i>  <span class="nav_name">Deconnexion</span> </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </nav>

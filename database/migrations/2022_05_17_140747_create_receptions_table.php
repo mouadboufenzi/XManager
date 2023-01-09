@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string("code");
             $table->date("date");
             $table->foreignId('commande_id')->constrained('commandes')->onDelete('cascade');
+            $table->foreignId('depot_id')->constrained('depots')->onDelete('cascade');
+            $table->integer('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

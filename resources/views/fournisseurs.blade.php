@@ -156,7 +156,7 @@
         <div class="myForm" style="height: 500px;">
                 <div class="form-group">
                     <span>Raison social : </span>
-                    <input id="pv" name="raison_social" type="text" class="form-control" value="" placeholder="Raison social">
+                    <input id="pv" name="raison_social" type="text" class="form-control" value="{{isset($id) ? $that_fournisseur->raison_social : ''}}" placeholder="Raison social">
 
                     <span>IF : </span>
                     <input id="pa" name="if" type="text" class="form-control" value="{{isset($id) ? $that_fournisseur->if : ''}}" placeholder="IF">
@@ -182,7 +182,7 @@
                         <option value="Espece" @if (isset($id) && $that_fournisseur->mode_paiement == "Espece")
                             selected
                         @endif>Espece</option>
-                        <option value="Carte bancaire" @if (isset($id) && $that_fournisseur->mode_paiement == "Carte bancaire")
+                        <option value="Carte bancaire" @if (isset($id) && $that_fournisseur->mode_paiement == "Carte Bancaire")
                             selected
                         @endif>Carte bancaire</option>
                     </select>

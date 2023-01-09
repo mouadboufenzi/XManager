@@ -19,4 +19,14 @@ class Reception extends Model
         return $this->belongsToMany(Article::class, 'article_reception')
                     ->withTimestamps();
     }
+
+    public function facture()
+    {
+        return $this->belongsTo(Facture::class);
+    }
+
+    public function depot()
+    {
+        return $this->belongsTo(Depot::class, 'depot_id');
+    }
 }

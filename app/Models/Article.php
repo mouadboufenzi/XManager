@@ -21,4 +21,11 @@ class Article extends Model
         return $this->belongsToMany(Reception::class, 'article_reception')
                     ->withTimestamps();
     }
+
+    public function stocks()
+    {
+        return $this->belongsToMany(Stock::class, 'article_stock')
+                    ->withPivot('id', 'quantite', 'date')
+                    ->withTimestamps();
+    }
 }

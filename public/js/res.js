@@ -59,7 +59,6 @@ code.addEventListener('change', function () {
 
             for (let j = 1; j <= size; j++) {
                 document.getElementById(`btt${j}`).addEventListener('click', function () {
-                    console.log(j);
                     let index = j;
                     des = document.getElementById(`des[${index - 1}]`).value
                     input = `<span>Quantite Reception de ${des}: </span>
@@ -88,6 +87,10 @@ code.addEventListener('change', function () {
             }
         },
     });
+})
+
+$('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
 })
 
 

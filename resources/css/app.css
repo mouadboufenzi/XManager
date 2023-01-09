@@ -503,8 +503,7 @@ a {
   }
   
   #tsum-tabs main {
-    min-width: 320px;
-    max-width: 800px;
+    width: 100%;
     padding: 50px;
     margin: 0 auto;
     background: #fff;
@@ -569,20 +568,3 @@ a {
       padding: 15px;
     }
   }
-  
-  
-  .myForm input[type="text"], .myForm select {
-      margin-top: 0;
-      margin-bottom: 10px;
-      padding-left: 20px;
-  }
-  
-  #btt:hover {
-      color: rgb(45, 45, 45);
-      background-color: white;
-      border: 1px solid rgb(45, 45, 45);
-  }
-
-.rec {
-    height: 200px;
-}
